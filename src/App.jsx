@@ -5,6 +5,7 @@ import { SignUp } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { RequireAuth } from "./components/ProtectedRoute";
 import { Dogs } from "./pages/Dogs";
+import { DogForm } from "./pages/DogForm";
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
           <Route path="/" element={<Homepage />} />
         </Route>
         <Route path="/dogs" element={<Dogs />} />
+        <Route path="/new-dog" element={<DogForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Route>

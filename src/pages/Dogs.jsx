@@ -1,12 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../service/api";
+import { getDogs } from "../service/dog";
 
 export function Dogs() {
-  const getDogs = async () => {
-    const { data } = await api.get("/dog/pending");
-    return data;
-  };
-
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dogs"],
     queryFn: getDogs,
