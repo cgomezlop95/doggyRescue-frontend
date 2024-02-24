@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { postLogin } from "../service/auth";
+import { queryClient } from "../main";
 
 export function Login() {
   const navigate = useNavigate(); //For redirecting upon success
@@ -15,6 +16,7 @@ export function Login() {
     mutationKey: "login",
     mutationFn: postLogin,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"], exact });
       navigate("/dogs");
     },
     onError: (error) => {
@@ -28,13 +30,17 @@ export function Login() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center"
+      >
         <label htmlFor="email">
           Email
           <input
             type="email"
             autoComplete="username"
             {...register("email", { required: true })}
+            className="border-2 border-black"
           />
           {errors.email && <span>This field is required</span>}
         </label>
@@ -44,10 +50,15 @@ export function Login() {
             type="password"
             autoComplete="current-password"
             {...register("password", { required: true })}
+            className="border-2 border-black"
           />
           {errors.password && <span>This field is required</span>}
         </label>
-        <input type="submit" disabled={isLoading} />
+        <input
+          type="submit"
+          disabled={isLoading}
+          className="border-2 border-black"
+        />
       </form>
     </div>
   );

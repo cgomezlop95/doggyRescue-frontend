@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Input } from "@nextui-org/react";
 
-export function SingleInput({ control, reset, name, type }) {
+export function SingleInput({ control, reset, name, type, error, isRequired }) {
   const capitalizeFirstLetter = (string) =>
     string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -21,14 +21,15 @@ export function SingleInput({ control, reset, name, type }) {
           label={capitalizeFirstLetter(name)}
           value={value}
           onChange={onChange}
-          //isInvalid={!!error}
-          //color={error ? "danger" : "default"}
-          //errorMessage={error && error.message}
+          isInvalid={!!error}
+          color={error ? "danger" : "default"}
+          errorMessage={error && error.message}
           type={type}
           isClearable
           variant="bordered"
-          placeholder={`Enter your ${name}`}
+          //placeholder={`Enter your ${name}`}
           onClear={() => reset()}
+          isRequired={isRequired}
         />
       )}
     />

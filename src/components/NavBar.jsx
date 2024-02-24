@@ -11,7 +11,6 @@ export const NavBar = () => {
         <Link to="/login">Log in</Link>
         <Link to="/dogs">Dogs</Link>
         <Link to="/new-dog">Add New Dog</Link>
-        <Button onClick={logout}>Logout</Button>
       </div>
       <Outlet />
     </>

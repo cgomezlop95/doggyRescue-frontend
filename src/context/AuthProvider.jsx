@@ -1,27 +1,22 @@
-import { useState, useEffect, createContext } from "react";
+import { createContext } from "react";
 import { isUserLoggedIn } from "../service/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["currentUser"],
     queryFn: isUserLoggedIn,
+    retry: false,
   });
 
-  useEffect(() => {
-    if (data?.user) {
-      setCurrentUser(data?.user);
-    } else {
-      setCurrentUser(null);
-    }
-  }, [data]);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser: data?.user }}>
       {children}
     </AuthContext.Provider>
   );

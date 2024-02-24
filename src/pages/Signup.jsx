@@ -25,7 +25,10 @@ export function SignUp() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center"
+      >
         <label htmlFor="email">
           Email
           <input
@@ -33,6 +36,7 @@ export function SignUp() {
             name="email"
             autoComplete="username"
             {...register("email", { required: true })}
+            className="border-2 border-black"
           />
           {errors.email && <span>This field is required</span>}
         </label>
@@ -43,10 +47,15 @@ export function SignUp() {
             name="password"
             autoComplete="new-password"
             {...register("password", { required: true })}
+            className="border-2 border-black"
           />
           {errors.password && <span>This field is required</span>}
         </label>
-        <button type="submit" disabled={signupMutation.isLoading}>
+        <button
+          type="submit"
+          disabled={signupMutation.isLoading}
+          className="border-2 border-black"
+        >
           Sign up
         </button>
       </form>
