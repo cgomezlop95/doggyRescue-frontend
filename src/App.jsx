@@ -6,6 +6,9 @@ import { Login } from "./pages/Login";
 import { RequireAuth } from "./components/ProtectedRoute";
 import { Dogs } from "./pages/Dogs";
 import { DogForm } from "./pages/DogForm";
+import { DogList } from "./pages/DogList";
+import { DogCardDetailed } from "./pages/DogCardDetailed";
+import { Mapbox } from "./pages/Mapbox";
 
 export function App() {
   return (
@@ -14,10 +17,12 @@ export function App() {
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
         </Route>
-        <Route path="/dogs" element={<Dogs />} />
+        <Route path="/dog" element={<DogList />} />
+        <Route path="dog/:id" element={<DogCardDetailed />} />
         <Route path="/new-dog" element={<DogForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/mapbox" element={<Mapbox/>} />
       </Route>
     </Routes>
   );

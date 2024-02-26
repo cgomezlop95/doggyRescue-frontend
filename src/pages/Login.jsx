@@ -16,7 +16,8 @@ export function Login() {
     mutationKey: "login",
     mutationFn: postLogin,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"], exact });
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      //Add exact to the object - if I add it, it does not work
       navigate("/dogs");
     },
     onError: (error) => {

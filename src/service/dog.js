@@ -5,6 +5,11 @@ const getDogs = async () => {
   return data;
 };
 
+const getDogById = async (id) => {
+  const { data } = await api.get(`/dog/${id}`);
+  return data;
+};
+
 const postDog = async ({
   dogName,
   dogAge,
@@ -38,4 +43,4 @@ const postDog = async ({
   return data;
 };
 
-export { getDogs, postDog };
+export { getDogs, getDogById, postDog };

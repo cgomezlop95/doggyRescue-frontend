@@ -9,8 +9,9 @@ export const NavBar = () => {
         <Link to="/">Go to home page</Link>
         <Link to="/signup">Sign up</Link>
         <Link to="/login">Log in</Link>
-        <Link to="/dogs">Dogs</Link>
+        <Link to="/dog">All Dogs</Link>
         <Link to="/new-dog">Add New Dog</Link>
+        <Link to="/mapbox">Mapbox</Link>
       </div>
       <Outlet />
     </>
