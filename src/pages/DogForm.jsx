@@ -1,18 +1,25 @@
 import { SingleInput } from "../components/SingleInput";
 import { InputFileUpload } from "../components/InputFileUpload";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postDog } from "../service/dog";
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { BooleanInput } from "../components/BooleanInput";
 import { BooleanInputSwitch } from "../components/BooleanInputSwitch";
 import { SelectInput } from "../components/SelectInput";
+import { Alert, Box } from "@mui/material";
+
+//Firestore
+import React, { useState } from "react";
+import { storage } from "../config/firebase"; // Ajusta la ruta de importación según sea necesario
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export function DogForm() {
   const {
     control,
     handleSubmit,
     reset,
+    register,
     formState: { errors },
   } = useForm();
 
@@ -81,12 +88,33 @@ export function DogForm() {
     },
   ];
 
-  const { mutate } = useMutation({
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+    const storageRef = ref(storage, `images/${image.name}`);
+    uploadBytes(storageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        setUrl(downloadURL);
+        console.log("Archivo disponible en", downloadURL);
+      });
+    });
+  };
+
+  const { mutate, isSuccess } = useMutation({
     mutationKey: "createDog",
     mutationFn: postDog,
   });
 
   const onSubmit = (data) => {
+    console.log(data);
     mutate(data);
   };
 
@@ -97,7 +125,10 @@ export function DogForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center items-center mt-20 gap-3"
       >
-        <SelectInput name="dogSex" control={control}/>
+        <select {...register("dogSex", { required: true })}>
+          <option value="male">male</option>
+          <option value=" female "> female </option>
+        </select>
 
         {inputStringArray.map((el) => {
           return (
@@ -114,17 +145,31 @@ export function DogForm() {
         })}
 
         {booleanInputArray.map((el) => {
-          return <BooleanInput key={el.id} name={el.name} />;
+          return (
+            <label key={el.id}>
+              <input type="checkbox" {...register(el.name)} />
+              {el.name}
+            </label>
+          );
         })}
 
-        {booleanInputArray.map((el) => {
-          return <BooleanInputSwitch key={el.id} name={el.name} />;
-        })}
+        <div>
+          <input type="file" onChange={handleChange} />
+          <br />
+          {url && (
+            <img src={url} alt="Subida Firebase" style={{ width: "100px" }} />
+          )}
+        </div>
 
-        <InputFileUpload />
-        <Button color="primary" type="submit">
+        <Button color="primary" type="submit" onClick={handleUpload}>
           Submit
         </Button>
+
+        {isSuccess && (
+          <Box className="flex flex-col justify-center items-center mt-10 gap-3">
+            <Alert severity="success">Your dog was succesfully created. </Alert>
+          </Box>
+        )}
       </form>
     </>
   );

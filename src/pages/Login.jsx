@@ -18,7 +18,7 @@ export function Login() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       //Add exact to the object - if I add it, it does not work
-      navigate("/dogs");
+      navigate("/dog");
     },
     onError: (error) => {
       console.error("Error al loguear el usuario:", error);

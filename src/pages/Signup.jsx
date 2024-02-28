@@ -15,7 +15,7 @@ export function SignUp() {
     mutationKey: "signup",
     mutationFn: postRegister,
     onSuccess: () => {
-      navigate("/dogs");
+      navigate("/dog");
     },
   });
 
