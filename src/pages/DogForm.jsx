@@ -8,10 +8,8 @@ import { BooleanInput } from "../components/BooleanInput";
 import { BooleanInputSwitch } from "../components/BooleanInputSwitch";
 import { SelectInput } from "../components/SelectInput";
 import { Alert, Box } from "@mui/material";
-
-//Firestore
 import React, { useState } from "react";
-import { storage } from "../config/firebase"; // Ajusta la ruta de importación según sea necesario
+import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export function DogForm() {
@@ -59,6 +57,20 @@ export function DogForm() {
       error: errors.dogDescription,
       isRequired: false,
     },
+    {
+      id: "6",
+      name: "longitude",
+      type: "number",
+      error: errors.longitude,
+      isRequired: false,
+    },
+    {
+      id: "7",
+      name: "latitude",
+      type: "number",
+      error: errors.latitude,
+      isRequired: false,
+    },
   ];
 
   const booleanInputArray = [
@@ -90,7 +102,6 @@ export function DogForm() {
 
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
-  const [progress, setProgress] = useState(0);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -98,24 +109,22 @@ export function DogForm() {
     }
   };
 
-  const handleUpload = () => {
-    const storageRef = ref(storage, `images/${image.name}`);
-    uploadBytes(storageRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        setUrl(downloadURL);
-        console.log("Archivo disponible en", downloadURL);
-      });
-    });
-  };
-
   const { mutate, isSuccess } = useMutation({
     mutationKey: "createDog",
     mutationFn: postDog,
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    mutate(data);
+  const onSubmit = async (data) => {
+    const storageRef = ref(storage, `images/${image.name}`);
+    try {
+      await uploadBytes(storageRef, image);
+      const downloadURL = await getDownloadURL(storageRef);
+      setUrl(downloadURL);
+      console.log("Archivo disponible en", downloadURL);
+      mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+    } catch (error) {
+      console.error("Error during upload:", error);
+    }
   };
 
   return (
@@ -153,15 +162,9 @@ export function DogForm() {
           );
         })}
 
-        <div>
-          <input type="file" onChange={handleChange} />
-          <br />
-          {url && (
-            <img src={url} alt="Subida Firebase" style={{ width: "100px" }} />
-          )}
-        </div>
+        <input type="file" onChange={handleChange} />
 
-        <Button color="primary" type="submit" onClick={handleUpload}>
+        <Button color="primary" type="submit">
           Submit
         </Button>
 

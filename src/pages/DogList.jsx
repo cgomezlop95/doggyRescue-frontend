@@ -19,7 +19,7 @@ export function DogList() {
     <ImageList
       sx={{ width: 1300, margin: 5 }}
       cols={4}
-      rowHeight="300" //or "auto"
+      rowHeight={300} //or "auto"
       // variant="woven"
       gap={20}
     >

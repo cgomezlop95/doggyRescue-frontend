@@ -24,6 +24,8 @@ const postDog = async ({
   isVaccinated,
   isSterilized,
   dogPhotoURL,
+  latitude,
+  longitude,
 }) => {
   const { data } = await api.post("/create-new-dog", {
     dogName,
@@ -39,6 +41,8 @@ const postDog = async ({
     isVaccinated,
     isSterilized,
     dogPhotoURL,
+    latitude,
+    longitude,
   });
   return data;
 };
