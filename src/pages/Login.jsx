@@ -23,7 +23,6 @@ export function Login() {
       type: "string",
       error: errors.email,
       isRequired: true,
-      autocomplete: "username",
     },
     {
       id: "2",
@@ -32,7 +31,6 @@ export function Login() {
       type: "password",
       error: errors.password,
       isRequired: true,
-      autocomplete: "current-password",
     },
   ];
 
@@ -41,7 +39,6 @@ export function Login() {
     mutationFn: postLogin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      //Add exact to the object - if I add it, it does not work
       navigate("/dog");
     },
     onError: (error) => {
@@ -70,7 +67,6 @@ export function Login() {
               type={el.type}
               error={el.error}
               isRequired={el.isRequired}
-              autocomplete={el.autocomplete}
             />
           );
         })}
@@ -78,12 +74,6 @@ export function Login() {
         <Button color="primary" type="submit" disabled={isLoading}>
           Submit
         </Button>
-
-        {/* <input
-          type="submit"
-          disabled={isLoading}
-          className="border-2 border-black"
-        /> */}
       </form>
     </div>
   );

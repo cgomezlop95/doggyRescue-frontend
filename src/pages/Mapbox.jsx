@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useQuery } from "@tanstack/react-query";
-import { getDogs } from "../service/dog";
+import { getPendingDogs } from "../service/dog";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiaXZhbmVzdGViYW4iLCJhIjoiY2xvOXFiYXdnMGo0NDJqcXByMWp5eGt2NCJ9.M4IK9Cm2MPbyj26ZXeukug";
@@ -10,7 +10,7 @@ mapboxgl.accessToken =
 export function Mapbox() {
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dogs"],
-    queryFn: getDogs,
+    queryFn: getPendingDogs,
   });
 
   useEffect(() => {
@@ -22,13 +22,16 @@ export function Mapbox() {
     });
 
     dogData?.dogs.forEach((dog) => {
-      const coordinates = [dog.longitude, dog.latitude];
-      console.log(coordinates);
-      const dogId = dog.id;
-      const newMarker = new mapboxgl.Marker()
-        .setLngLat(coordinates)
-        .setPopup(new mapboxgl.Popup().setHTML(dogId))
-        .addTo(map);
+      if (dog.latitude && dog.longitude) {
+        const coordinates = [dog.longitude, dog.latitude];
+        console.log(coordinates);
+        const dogId = dog.id;
+        const newMarker = new mapboxgl.Marker()
+          .setLngLat(coordinates)
+          .setPopup(new mapboxgl.Popup().setHTML(dogId))
+          .addTo(map);
+        console.log(newMarker);
+      }
     });
 
     // Clean up

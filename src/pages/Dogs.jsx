@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDogs } from "../service/dog";
+import { getPendingDogs } from "../service/dog";
 
 export function Dogs() {
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dogs"],
-    queryFn: getDogs,
+    queryFn: getPendingDogs,
   });
 
   if (isLoading) {

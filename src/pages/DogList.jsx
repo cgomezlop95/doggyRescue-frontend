@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDogs } from "../service/dog";
+import { getPendingDogs } from "../service/dog";
 import { Link } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -8,7 +8,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 export function DogList() {
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dogs"],
-    queryFn: getDogs,
+    queryFn: getPendingDogs,
   });
 
   if (isLoading) {
@@ -24,7 +24,7 @@ export function DogList() {
       gap={20}
     >
       {dogData?.dogs.map((item) => (
-        <Link key={item.id} to={item.id.toString()}>
+        <Link key={item.id} to={`/dog/${item.id.toString()}`}>
           <ImageListItem>
             <div
               style={{

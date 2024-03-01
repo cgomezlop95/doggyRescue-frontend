@@ -10,12 +10,13 @@ import React, { useState } from "react";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
+import { CameraIcon } from "../components/CameraIcon";
 
 export function DogForm() {
   const {
     control,
     handleSubmit,
-    reset,
+    resetField,
     register,
     formState: { errors },
   } = useForm();
@@ -155,7 +156,7 @@ export function DogForm() {
           return (
             <SingleInput
               control={control}
-              reset={reset}
+              resetField={resetField}
               name={el.name}
               label={el.label}
               type={el.type}
@@ -178,10 +179,10 @@ export function DogForm() {
             );
           })}
         </div>
+        {/* 
+        <InputFileUpload onChange={handleChange} /> */}
 
-        <InputFileUpload onChange={handleChange} />
-
-        {/* <input type="file" onChange={handleChange} /> */}
+        <input type="file" onChange={handleChange} />
 
         <Button color="primary" type="submit">
           Submit

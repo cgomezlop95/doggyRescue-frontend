@@ -21,14 +21,4 @@ const isUserLoggedIn = async () => {
   return data;
 };
 
-//logout
-
-const logout = async () => {
-  try {
-    await api.get("/auth/logout");
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
-
-export { postLogin, postRegister, isUserLoggedIn, logout };
+export { postLogin, postRegister, isUserLoggedIn };

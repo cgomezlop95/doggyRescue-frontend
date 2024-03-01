@@ -1,15 +1,14 @@
 import { Controller } from "react-hook-form";
-import { Input, autocomplete } from "@nextui-org/react";
+import { Input} from "@nextui-org/react";
 
 export function SingleInput({
   control,
-  reset,
+  resetField,
   name,
   type,
   error,
   isRequired,
   label,
-  autocomplete
 }) {
   return (
     <Controller
@@ -34,10 +33,9 @@ export function SingleInput({
           isClearable
           variant="bordered"
           //placeholder={`Enter your ${name}`}
-          onClear={() => reset()}
+          onClear={() => resetField(name)}
           isRequired={isRequired}
           className="max-w-xs"
-          autoComplete={autocomplete}
         />
       )}
     />

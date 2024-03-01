@@ -23,7 +23,6 @@ export function SignUp() {
       type: "string",
       error: errors.email,
       isRequired: true,
-      autocomplete: "username",
     },
     {
       id: "2",
@@ -32,7 +31,6 @@ export function SignUp() {
       type: "password",
       error: errors.password,
       isRequired: true,
-      autocomplete: "current-password",
     },
   ];
 
@@ -40,7 +38,7 @@ export function SignUp() {
     mutationKey: "signup",
     mutationFn: postRegister,
     onSuccess: () => {
-      navigate("/dog");
+      navigate("/login");
     },
   });
 
@@ -65,7 +63,6 @@ export function SignUp() {
               type={el.type}
               error={el.error}
               isRequired={el.isRequired}
-              autocomplete={el.autocomplete}
             />
           );
         })}
@@ -77,14 +74,6 @@ export function SignUp() {
         >
           Submit
         </Button>
-
-        {/* <button
-          type="submit"
-          disabled={signupMutation.isLoading}
-          className="border-2 border-black"
-        >
-          Sign up
-        </button> */}
       </form>
     </div>
   );

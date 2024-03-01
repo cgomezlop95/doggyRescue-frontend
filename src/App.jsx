@@ -11,6 +11,7 @@ import { DogCardDetailed } from "./pages/DogCardDetailed";
 import { Mapbox } from "./pages/Mapbox";
 import { SignUpBackup } from "./pages/SignupBackup";
 import { LoginBackup } from "./pages/LoginBackup";
+import { AdoptionRequestForm } from "./pages/AdoptionRequestForm";
 
 export function App() {
   return (
@@ -19,8 +20,9 @@ export function App() {
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
         </Route>
-        <Route path="/dog" element={<DogList />} />
+        <Route path="/dogs/pending" element={<DogList />} />
         <Route path="dog/:id" element={<DogCardDetailed />} />
+        <Route path="/dog/:id/request" element={<AdoptionRequestForm />} />
         <Route path="/new-dog" element={<DogForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />

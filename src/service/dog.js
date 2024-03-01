@@ -1,7 +1,12 @@
 import { api } from "./api";
 
-const getDogs = async () => {
-  const { data } = await api.get("/dog/pending");
+const getPendingDogs = async () => {
+  const { data } = await api.get("/dogs/pending");
+  return data;
+};
+
+const getAdoptedDogs = async () => {
+  const { data } = await api.get("/dogs/adopted");
   return data;
 };
 
@@ -47,4 +52,4 @@ const postDog = async ({
   return data;
 };
 
-export { getDogs, getDogById, postDog };
+export { getPendingDogs, getAdoptedDogs, getDogById, postDog };

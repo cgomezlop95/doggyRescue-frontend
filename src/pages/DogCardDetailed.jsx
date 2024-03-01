@@ -14,8 +14,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Button from "@mui/material/Button";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { getDogById } from "../service/dog";
 import { useQuery } from "@tanstack/react-query";
 import { Box } from "@mui/material";
@@ -52,7 +53,7 @@ export function DogCardDetailed() {
   }
 
   return (
-    <Box className="flex justify-center m-5">
+    <Box className="flex flex-col justify-center m-5">
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
@@ -114,6 +115,12 @@ export function DogCardDetailed() {
           </CardContent>
         </Collapse>
       </Card>
+
+      <Link to="request">
+        <Button variant="contained">Request Adoption</Button>
+      </Link>
+
+      <Button variant="contained">Update Dog Details</Button>
     </Box>
   );
 }
