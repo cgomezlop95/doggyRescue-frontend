@@ -3,14 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { postLogin } from "../service/auth";
 import { queryClient } from "../main";
+import { SingleInput } from "../components/SingleInput";
+import { Button } from "@nextui-org/react";
 
 export function Login() {
   const navigate = useNavigate(); //For redirecting upon success
   const {
-    register,
+    control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const loginInputArray = [
+    {
+      id: "1",
+      name: "email",
+      label: "Email",
+      type: "string",
+      error: errors.email,
+      isRequired: true,
+      autocomplete: "username",
+    },
+    {
+      id: "2",
+      name: "password",
+      label: "Password",
+      type: "password",
+      error: errors.password,
+      isRequired: true,
+      autocomplete: "current-password",
+    },
+  ];
 
   const { mutate: loginMutate, isLoading } = useMutation({
     mutationKey: "login",
@@ -33,33 +57,33 @@ export function Login() {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center"
+        className="flex flex-col justify-center items-center mt-20 gap-3"
       >
-        <label htmlFor="email">
-          Email
-          <input
-            type="email"
-            autoComplete="username"
-            {...register("email", { required: true })}
-            className="border-2 border-black"
-          />
-          {errors.email && <span>This field is required</span>}
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            autoComplete="current-password"
-            {...register("password", { required: true })}
-            className="border-2 border-black"
-          />
-          {errors.password && <span>This field is required</span>}
-        </label>
-        <input
+        {loginInputArray.map((el) => {
+          return (
+            <SingleInput
+              key={el.id}
+              control={control}
+              reset={reset}
+              name={el.name}
+              label={el.label}
+              type={el.type}
+              error={el.error}
+              isRequired={el.isRequired}
+              autocomplete={el.autocomplete}
+            />
+          );
+        })}
+
+        <Button color="primary" type="submit" disabled={isLoading}>
+          Submit
+        </Button>
+
+        {/* <input
           type="submit"
           disabled={isLoading}
           className="border-2 border-black"
-        />
+        /> */}
       </form>
     </div>
   );

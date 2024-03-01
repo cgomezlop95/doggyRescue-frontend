@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input } from "@nextui-org/react";
+import { Input, autocomplete } from "@nextui-org/react";
 
 export function SingleInput({
   control,
@@ -9,6 +9,7 @@ export function SingleInput({
   error,
   isRequired,
   label,
+  autocomplete
 }) {
   return (
     <Controller
@@ -36,6 +37,7 @@ export function SingleInput({
           onClear={() => reset()}
           isRequired={isRequired}
           className="max-w-xs"
+          autoComplete={autocomplete}
         />
       )}
     />

@@ -9,6 +9,8 @@ import { DogForm } from "./pages/DogForm";
 import { DogList } from "./pages/DogList";
 import { DogCardDetailed } from "./pages/DogCardDetailed";
 import { Mapbox } from "./pages/Mapbox";
+import { SignUpBackup } from "./pages/SignupBackup";
+import { LoginBackup } from "./pages/LoginBackup";
 
 export function App() {
   return (
@@ -22,7 +24,7 @@ export function App() {
         <Route path="/new-dog" element={<DogForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/mapbox" element={<Mapbox/>} />
+        <Route path="/mapbox" element={<Mapbox />} />
       </Route>
     </Routes>
   );
