@@ -7,9 +7,11 @@ import { BooleanGroup } from "../components/BooleanGroup";
 import { SingleInput } from "../components/SingleInput";
 import { Button } from "@nextui-org/react";
 import { Alert, Box } from "@mui/material";
+import { useAuth } from "../hooks/useAuth";
 
 export function AdoptionRequestForm() {
   const { id } = useParams();
+  let auth = useAuth();
 
   const {
     control,
@@ -108,11 +110,17 @@ export function AdoptionRequestForm() {
   const { mutate, isSuccess } = useMutation({
     mutationKey: ["createAdoptionRequest", id],
     mutationFn: (data) => postRequest(id, data),
+    // mutationFn: (data) => postRequest(id, data),
+    // mutationFn: (data) => console.log("mutation fn", data),
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    mutate(data);
+    // console.log(data);
+    // console.log("auth current user id", auth.currentUser.id);
+    // // mutate(data);
+    // console.log("ENTRA");
+    // console.log("final data", { ...data, userId: auth.currentUser.id });
+    mutate({ ...data, userId: auth.currentUser.id, dogId: dogData.dog.id });
   };
 
   console.log("id", id);

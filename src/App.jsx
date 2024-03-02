@@ -19,10 +19,10 @@ export function App() {
       <Route element={<NavBar />}>
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
+          <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
         </Route>
         <Route path="/dogs/pending" element={<DogList />} />
         <Route path="dog/:id" element={<DogCardDetailed />} />
-        <Route path="/dog/:id/request" element={<AdoptionRequestForm />} />
         <Route path="/new-dog" element={<DogForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />

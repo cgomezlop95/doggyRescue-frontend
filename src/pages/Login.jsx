@@ -10,7 +10,7 @@ export function Login() {
   const navigate = useNavigate(); //For redirecting upon success
   const {
     control,
-    reset,
+    resetField,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -39,7 +39,7 @@ export function Login() {
     mutationFn: postLogin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      navigate("/dog");
+      navigate("/dogs/pending");
     },
     onError: (error) => {
       console.error("Error al loguear el usuario:", error);
@@ -61,7 +61,7 @@ export function Login() {
             <SingleInput
               key={el.id}
               control={control}
-              reset={reset}
+              resetField={resetField}
               name={el.name}
               label={el.label}
               type={el.type}

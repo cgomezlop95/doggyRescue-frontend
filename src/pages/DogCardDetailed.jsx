@@ -116,7 +116,7 @@ export function DogCardDetailed() {
         </Collapse>
       </Card>
 
-      <Link to="request">
+      <Link to={`/request-dog/${dogData.dog.id.toString()}`}>
         <Button variant="contained">Request Adoption</Button>
       </Link>
 

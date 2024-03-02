@@ -10,7 +10,7 @@ export function SignUp() {
   const {
     register,
     control,
-    reset,
+    resetField,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -57,7 +57,7 @@ export function SignUp() {
             <SingleInput
               key={el.id}
               control={control}
-              reset={reset}
+              resetField={resetField}
               name={el.name}
               label={el.label}
               type={el.type}
