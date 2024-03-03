@@ -11,5 +11,6 @@ export function RequireAuth() {
 
   console.log("currentuser", auth.currentUser.id);
   console.log(auth.currentUser.isAdmin);
+  console.log("current user", auth.currentUser);
   return <Outlet />;
 }

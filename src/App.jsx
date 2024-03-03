@@ -17,7 +17,8 @@ import { UpdateDogForm } from "./pages/UpdateDogForm";
 import { PendingRequests } from "./pages/PendingRequests";
 import { ApprovedRequests } from "./pages/ApprovedRequests";
 import { RejectedRequests } from "./pages/RejectedRequests";
-import { RequestAdminTable} from "./pages/RequestAdminTable";
+import { RequestAdminTable } from "./pages/RequestAdminTable";
+import { Profile } from "./pages/Profile";
 
 export function App() {
   return (
@@ -26,6 +27,7 @@ export function App() {
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route element={<RequireAdmin />}>

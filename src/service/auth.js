@@ -8,10 +8,19 @@ const postLogin = async ({ email, password }) => {
   return data;
 };
 
-const postRegister = async ({ email, password }) => {
+const postRegister = async ({
+  email,
+  password,
+  firstName,
+  lastName,
+  phoneNumber,
+}) => {
   const { data } = await api.post("/auth/register", {
     email,
     password,
+    firstName,
+    lastName,
+    phoneNumber,
   });
   return data;
 };

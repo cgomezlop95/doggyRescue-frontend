@@ -10,6 +10,7 @@ export const NavBar = () => {
         <Link to="/dogs/pending">Pending Dogs</Link>
         <Link to="/dogs/adopted">Adopted Dogs</Link>
         <Link to="/mapbox">Dog Map</Link>
+        <Link to="/profile">Profile</Link>
       </div>
 
       <div className="flex flex-row gap-10">

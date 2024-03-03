@@ -32,6 +32,30 @@ export function SignUp() {
       error: errors.password,
       isRequired: true,
     },
+    {
+      id: "3",
+      name: "firstName",
+      label: "First Name",
+      type: "string",
+      error: errors.firstName,
+      isRequired: true,
+    },
+    {
+      id: "4",
+      name: "lastName",
+      label: "Last Name",
+      type: "string",
+      error: errors.lastName,
+      isRequired: true,
+    },
+    {
+      id: "5",
+      name: "phoneNumber",
+      label: "Phone Number",
+      type: "string",
+      error: errors.phoneNumber,
+      isRequired: false,
+    },
   ];
 
   const { mutate: signupMutation } = useMutation({
