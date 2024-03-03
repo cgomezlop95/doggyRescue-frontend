@@ -120,7 +120,9 @@ export function DogCardDetailed() {
         <Button variant="contained">Request Adoption</Button>
       </Link>
 
-      <Button variant="contained">Update Dog Details</Button>
+      <Link to={`/update-dog/${dogData.dog.id.toString()}`}>
+        <Button variant="contained">Update Dog Details</Button>
+      </Link>
     </Box>
   );
 }

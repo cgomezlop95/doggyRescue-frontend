@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input} from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 
 export function SingleInput({
   control,
@@ -9,12 +9,14 @@ export function SingleInput({
   error,
   isRequired,
   label,
+  defaultValue,
 }) {
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={""} //This solved my warning "A component changed from uncontrolled to controlled"
+      defaultValue={defaultValue ? defaultValue : ""} //This solved my warning "A component changed from uncontrolled to controlled"
+      //If defaultValue is null or undefined, an empty string is used as the default value.
       rules={{
         required: {
           value: true,
@@ -24,7 +26,7 @@ export function SingleInput({
       render={({ field: { onChange, value } }) => (
         <Input
           label={label}
-          value={value}
+          value={value} //The current value of the input (controlled).
           onChange={onChange}
           isInvalid={!!error}
           color={error ? "danger" : "default"}
@@ -32,8 +34,10 @@ export function SingleInput({
           type={type}
           isClearable
           variant="bordered"
-          //placeholder={`Enter your ${name}`}
-          onClear={() => resetField(name)}
+          // placeholder={defaultValue}
+          onClear={() => {
+            resetField(name);
+          }}
           isRequired={isRequired}
           className="max-w-xs"
         />
@@ -41,3 +45,5 @@ export function SingleInput({
     />
   );
 }
+
+//I cannot clear properly the field if there is a default value for the updated form

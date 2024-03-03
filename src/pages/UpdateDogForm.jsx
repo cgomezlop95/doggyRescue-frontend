@@ -1,8 +1,8 @@
 import { SingleInput } from "../components/SingleInput";
 import { InputFileUpload } from "../components/InputFileUpload";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { postDog } from "../service/dog";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getDogById, updateDog } from "../service/dog";
 import { Button } from "@nextui-org/react";
 import { SelectInput } from "../components/SelectInput";
 import { Alert, Box } from "@mui/material";
@@ -11,11 +11,23 @@ import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function DogForm() {
+export function UpdateDogForm() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { data: dogData, isLoading } = useQuery({
+    queryKey: ["dog", id],
+    queryFn: () => getDogById(id),
+  });
+
+  console.log(dogData);
+
   const {
     control,
     handleSubmit,
+    reset,
     resetField,
     register,
     formState: { errors },
@@ -29,7 +41,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogName,
       isRequired: true,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.dogName,
     },
     {
       id: "2",
@@ -38,7 +50,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogAge,
       isRequired: true,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.dogAge,
     },
     {
       id: "3",
@@ -47,7 +59,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogWeight,
       isRequired: true,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.dogWeight,
     },
     {
       id: "4",
@@ -56,7 +68,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogBreed,
       isRequired: true,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.dogBreed,
     },
     {
       id: "5",
@@ -65,7 +77,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogDescription,
       isRequired: false,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.dogDescription,
     },
     {
       id: "6",
@@ -74,7 +86,7 @@ export function DogForm() {
       type: "number",
       error: errors.longitude,
       isRequired: false,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.longitude,
     },
     {
       id: "7",
@@ -83,7 +95,7 @@ export function DogForm() {
       type: "number",
       error: errors.latitude,
       isRequired: false,
-      // defaultValue: "",
+      defaultValue: dogData?.dog.latitude,
     },
   ];
 
@@ -92,31 +104,37 @@ export function DogForm() {
       id: "1",
       name: "dogAdopted",
       label: "Dog Adopted",
+      defaultValue: dogData?.dog.dogAdopted,
     },
     {
       id: "2",
       name: "suitableForKids",
       label: "Suitable For Kids",
+      defaultValue: dogData?.dog.suitableForKids,
     },
     {
       id: "3",
       name: "suitableForOtherPets",
       label: "Suitable For Other Pets",
+      defaultValue: dogData?.dog.suitableForOtherPets,
     },
     {
       id: "4",
       name: "potentiallyDangerousDog",
       label: "Potentially Dangerous Dog",
+      defaultValue: dogData?.dog.potentiallyDangerousDog,
     },
     {
       id: "5",
       name: "isVaccinated",
       label: "Vaccinated",
+      defaultValue: dogData?.dog.isVaccinated,
     },
     {
       id: "6",
       name: "isSterilized",
       label: "Sterilized",
+      defaultValue: dogData?.dog.isSterilized,
     },
   ];
 
@@ -131,8 +149,13 @@ export function DogForm() {
   };
 
   const { mutate, isSuccess } = useMutation({
-    mutationKey: "createDog",
-    mutationFn: postDog,
+    mutationKey: ["updateDog", id],
+    mutationFn: (data) => updateDog(id, data),
+    onSuccess: () => {
+      // queryClient.invalidateQueries({ queryKey: ["dogs"] });
+      console.log("dog succesffully modified");
+      navigate("/dogs/pending");
+    },
   });
 
   const onSubmit = async (data) => {
@@ -149,15 +172,24 @@ export function DogForm() {
     }
   };
 
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <>
-      <h1>Dog Form</h1>
+      <h1>Update Dog Form</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center items-center mt-20 gap-3"
         // className="max-w-xs"
       >
-        <SelectInput control={control} name="dogSex" label="Gender" />
+        <SelectInput
+          control={control}
+          name="dogSex"
+          label="Gender"
+          defaultValue={dogData.dog.dogSex}
+        />
 
         {inputStringArray.map((el) => {
           return (
@@ -183,6 +215,7 @@ export function DogForm() {
                 name={el.name}
                 label={el.label}
                 key={el.id}
+                defaultValue={el.defaultValue}
               />
             );
           })}
@@ -193,12 +226,18 @@ export function DogForm() {
         <input type="file" onChange={handleChange} />
 
         <Button color="primary" type="submit">
-          Submit
+          Update Dog
+        </Button>
+
+        <Button color="primary" onClick={reset}>
+          Clear Form
         </Button>
 
         {isSuccess && (
           <Box className="flex flex-col justify-center items-center mt-10 gap-3">
-            <Alert severity="success">Your dog was succesfully created. </Alert>
+            <Alert severity="success">
+              Your dog was succesfully modified.{" "}
+            </Alert>
           </Box>
         )}
       </form>

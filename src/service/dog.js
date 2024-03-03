@@ -52,4 +52,44 @@ const postDog = async ({
   return data;
 };
 
-export { getPendingDogs, getAdoptedDogs, getDogById, postDog };
+const updateDog = async (
+  id,
+  {
+    dogName,
+    dogAge,
+    dogWeight,
+    dogSex,
+    dogBreed,
+    dogAdopted,
+    suitableForKids,
+    suitableForOtherPets,
+    dogDescription,
+    potentiallyDangerousDog,
+    isVaccinated,
+    isSterilized,
+    dogPhotoURL,
+    latitude,
+    longitude,
+  }
+) => {
+  const { data } = await api.put(`/update-dog/${id}`, {
+    dogName,
+    dogAge,
+    dogWeight,
+    dogSex,
+    dogBreed,
+    dogAdopted,
+    suitableForKids,
+    suitableForOtherPets,
+    dogDescription,
+    potentiallyDangerousDog,
+    isVaccinated,
+    isSterilized,
+    dogPhotoURL,
+    latitude,
+    longitude,
+  });
+  return data;
+};
+
+export { getPendingDogs, getAdoptedDogs, getDogById, postDog, updateDog };

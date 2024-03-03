@@ -6,18 +6,19 @@ const genders = [
   { label: "Female", value: "female", description: "female gender" },
 ];
 
-export function SelectInput({ control, name, label }) {
+export function SelectInput({ control, name, label, defaultValue }) {
   return (
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field: { onChange, value } }) => (
         <div className="flex w-full max-w-xs flex-col gap-2">
           <Select
             label={label}
             value={value}
             variant="bordered"
-            placeholder="Select the dog sex"
+            placeholder={defaultValue}
             className="max-w-xs"
             onChange={onChange}
           >
