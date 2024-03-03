@@ -49,7 +49,7 @@ export function DogCardDetailed() {
   };
 
   if (isLoading) {
-    return <h1>Loading dog</h1>;
+    return <h1>Loading...</h1>;
   }
 
   return (
@@ -58,7 +58,7 @@ export function DogCardDetailed() {
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              {dogData.dog.dogName[0]}
+              {dogData?.dog.dogName[0]}
             </Avatar>
           }
           //   action={
@@ -101,16 +101,21 @@ export function DogCardDetailed() {
           <CardContent>
             <ul>
               <li>Age: {dogData.dog.dogAge} years</li>
+              <li>Gender: {dogData.dog.dogSex}</li>
               <li>Weight: {dogData.dog.dogWeight}</li>
-              <li>Suitable For Kids:{dogData.dog.suitableForKids}</li>
               <li>
-                Suitable For Other Pets: {dogData.dog.suitableForOtherPets}
+                Suitable For Kids:{dogData.dog.suitableForKids ? "Yes" : "No"}
               </li>
               <li>
-                Potentially Dangerous: {dogData.dog.potentiallyDangerousDog}
+                Suitable For Other Pets:{" "}
+                {dogData.dog.suitableForOtherPets ? "Yes" : "No"}
               </li>
-              <li>Is Vaccinated: {dogData.dog.isVaccinated}</li>
-              <li>Is Sterilized: {dogData.dog.isSterilized}</li>
+              <li>
+                Potentially Dangerous:{" "}
+                {dogData.dog.potentiallyDangerousDog ? "Yes" : "No"}
+              </li>
+              <li>Is Vaccinated: {dogData.dog.isVaccinated ? "Yes" : "No"}</li>
+              <li>Is Sterilized: {dogData.dog.isSterilized ? "Yes" : "No"}</li>
             </ul>
           </CardContent>
         </Collapse>

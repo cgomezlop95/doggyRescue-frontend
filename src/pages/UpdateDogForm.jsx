@@ -159,14 +159,19 @@ export function UpdateDogForm() {
   });
 
   const onSubmit = async (data) => {
-    const storageRef = ref(storage, `images/${image.name}`);
     try {
-      await uploadBytes(storageRef, image);
-      const downloadURL = await getDownloadURL(storageRef);
-      setUrl(downloadURL);
-      console.log("Archivo disponible en", downloadURL);
-      console.log({ ...data, dogPhotoURL: downloadURL });
-      mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+      if (image) {
+        const storageRef = ref(storage, `images/${image.name}`);
+        await uploadBytes(storageRef, image);
+        const downloadURL = await getDownloadURL(storageRef);
+        setUrl(downloadURL);
+        console.log("Archivo disponible en", downloadURL);
+        console.log({ ...data, dogPhotoURL: downloadURL });
+        mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+      } else {
+        console.log(data);
+        mutate(data);
+      }
     } catch (error) {
       console.error("Error during upload:", error);
     }

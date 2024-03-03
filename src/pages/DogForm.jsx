@@ -90,31 +90,26 @@ export function DogForm() {
   const booleanInputArray = [
     {
       id: "1",
-      name: "dogAdopted",
-      label: "Dog Adopted",
-    },
-    {
-      id: "2",
       name: "suitableForKids",
       label: "Suitable For Kids",
     },
     {
-      id: "3",
+      id: "2",
       name: "suitableForOtherPets",
       label: "Suitable For Other Pets",
     },
     {
-      id: "4",
+      id: "3",
       name: "potentiallyDangerousDog",
       label: "Potentially Dangerous Dog",
     },
     {
-      id: "5",
+      id: "4",
       name: "isVaccinated",
       label: "Vaccinated",
     },
     {
-      id: "6",
+      id: "5",
       name: "isSterilized",
       label: "Sterilized",
     },
@@ -136,14 +131,19 @@ export function DogForm() {
   });
 
   const onSubmit = async (data) => {
-    const storageRef = ref(storage, `images/${image.name}`);
     try {
-      await uploadBytes(storageRef, image);
-      const downloadURL = await getDownloadURL(storageRef);
-      setUrl(downloadURL);
-      console.log("Archivo disponible en", downloadURL);
-      console.log({ ...data, dogPhotoURL: downloadURL });
-      mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+      if (image) {
+        const storageRef = ref(storage, `images/${image.name}`);
+        await uploadBytes(storageRef, image);
+        const downloadURL = await getDownloadURL(storageRef);
+        setUrl(downloadURL);
+        console.log("Archivo disponible en", downloadURL);
+        console.log({ ...data, dogPhotoURL: downloadURL });
+        mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+      } else {
+        console.log(data);
+        mutate(data);
+      }
     } catch (error) {
       console.error("Error during upload:", error);
     }
