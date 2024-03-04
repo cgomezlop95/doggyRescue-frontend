@@ -56,9 +56,15 @@ const getRejectedRequests = async () => {
   return data;
 };
 
+const getAllRequests = async () => {
+  const { data } = await api.get("/adoption-requests");
+  return data;
+};
+
 export {
   postRequest,
   getPendingRequests,
   getApprovedRequests,
   getRejectedRequests,
+  getAllRequests,
 };

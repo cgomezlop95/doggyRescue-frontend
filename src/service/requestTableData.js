@@ -1,69 +1,49 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getPendingRequests } from "../service/adoptionRequest";
-
 const columns = [
-  {name: "ID", uid: "id", sortable: true},
-  {name: "NAME", uid: "name", sortable: true},
-  {name: "AGE", uid: "age", sortable: true},
-  {name: "ROLE", uid: "role", sortable: true},
-  {name: "TEAM", uid: "team"},
-  {name: "EMAIL", uid: "email"},
-  {name: "STATUS", uid: "status", sortable: true},
-  {name: "ACTIONS", uid: "actions"},
-];
-
-const columnsTest = [
-    {name: "ID", uid: "id", sortable: true},
-    {name: "NAME", uid: "name", sortable: true},
-    {name: "AGE", uid: "age", sortable: true},
-    {name: "TEAM", uid: "team"},
-    {name: "EMAIL", uid: "email"},
-    {name: "EXPERIENCE", uid: "hasExperience"},
-    {name: "KIDS", uid: "hasKids"},
-    {name: "GARDEN", uid: "hasGarden"},
-    {name: "DESCRIPTION", uid: "adopterDescription"},
-    {name: "STATUS", uid: "status", sortable: true},
-    {name: "ACTIONS", uid: "actions"},
-  ];
-
-const statusOptions = [
-  {name: "Approved", uid: "approved"},
-  {name: "Rejected", uid: "rejected"},
-  {name: "Pending", uid: "pending"},
+  { name: "NAME", uid: "name" },
+  { name: "REQUESTER", uid: "requester" },
+  { name: "STATUS", uid: "status" },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
 const users = [
   {
     id: 1,
-    name: "Dog Name",
+    name: "Tony Reichert",
     role: "CEO",
     team: "Management",
-    status: "approved",
+    status: "active",
     age: "29",
-    avatar: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Brandlbracke.JPG",
-    email: "dog breed",
+    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    email: "tony.reichert@example.com",
   },
-  {
-    id: 2,
-    name: "Zoey Lang",
-    role: "Tech Lead",
-    team: "Development",
-    status: "rejected",
-    age: "25",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "zoey.lang@example.com",
-  },
-  {
-    id: 3,
-    name: "Zoey Lang",
-    role: "Tech Lead",
-    team: "Development",
-    status: "pending",
-    age: "25",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "zoey.lang@example.com",
-  }
 ];
 
-export {columns, users, statusOptions};
+const requests = [
+  {
+    OtherPets: "test",
+    adopterAge: 1,
+    adopterDescription: "test",
+    createdAt: "2024-03-02T10:58:54.748Z",
+    dailyHoursAway: 1,
+    dog: {
+      dogName: "Shayna",
+      dogPhotoURL:
+        "https://res.cloudinary.com/dr4yhkygx/image/upload/v1705522388/bqjb1kn0htcivxmftyqr.jpg",
+    },
+    dogId: "db7b8bcf-03da-4907-80d6-80af86605003",
+    hasExperience: true,
+    hasGarden: true,
+    hasKids: true,
+    hasOtherPets: true,
+    monthlyMoney: 1,
+    numberOfPeople: 1,
+    numberOfTrips: 1,
+    requestApproved: null,
+    updatedAt: "2024-03-02T10:58:54.748Z",
+    user: { email: "test@test.com", firstName: null, lastName: null },
+    userId: "98995493-ce41-47ba-8cbf-b9700b9d37ec",
+  },
+];
+
+export { columns, users, requests };
