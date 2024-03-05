@@ -1,6 +1,24 @@
-import { Link, Outlet } from "react-router-dom";
+import { Button } from "@mui/material";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { clearCookie } from "../service/auth";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../main";
 
 export const NavBar = () => {
+  const navigate = useNavigate(); //For redirecting upon success
+  const { mutate, isLoading } = useMutation({
+    mutationKey: "logout",
+    mutationFn: clearCookie,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      // console.log("Cookie has been cleared");
+      navigate("/login");
+    },
+    onError: (error) => {
+      console.error("Error al loguear el usuario:", error);
+    },
+  });
+
   return (
     <>
       <div className="flex flex-row gap-10">
@@ -11,6 +29,9 @@ export const NavBar = () => {
         <Link to="/dogs/adopted">Adopted Dogs</Link>
         <Link to="/mapbox">Dog Map</Link>
         <Link to="/profile">Profile</Link>
+        <Button onClick={mutate} disabled={isLoading}>
+          Logout
+        </Button>
       </div>
 
       <div className="flex flex-row gap-10">

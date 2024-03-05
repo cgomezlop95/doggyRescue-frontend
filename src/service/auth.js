@@ -30,4 +30,9 @@ const isUserLoggedIn = async () => {
   return data;
 };
 
-export { postLogin, postRegister, isUserLoggedIn };
+const clearCookie = async () => {
+  const { data } = await api.get("/auth/logout");
+  return data;
+};
+
+export { postLogin, postRegister, isUserLoggedIn, clearCookie };
