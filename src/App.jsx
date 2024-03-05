@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Homepage } from "./pages/Homepage";
 import { NavBar } from "./components/NavBar";
+import { ResponsiveNavBar } from "./components/ResponsiveNavBar";
 import { SignUp } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { RequireAuth } from "./components/ProtectedRoute";
@@ -19,11 +20,12 @@ import { ApprovedRequests } from "./pages/ApprovedRequests";
 import { RejectedRequests } from "./pages/RejectedRequests";
 import { RequestAdminTable } from "./pages/RequestAdminTable";
 import { Profile } from "./pages/Profile";
+import { AdoptedDogList } from "./pages/AdoptedDogList";
 
 export function App() {
   return (
     <Routes>
-      <Route element={<NavBar />}>
+      <Route element={<ResponsiveNavBar />}>
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
@@ -35,6 +37,7 @@ export function App() {
         </Route>
 
         <Route path="/dogs/pending" element={<DogList />} />
+        <Route path="/dogs/adopted" element={<AdoptedDogList />} />
         <Route path="dog/:id" element={<DogCardDetailed />} />
         <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         <Route path="/signup" element={<SignUp />} />
