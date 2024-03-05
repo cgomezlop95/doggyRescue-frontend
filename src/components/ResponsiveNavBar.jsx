@@ -17,14 +17,19 @@ import { clearCookie } from "../service/auth";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../main";
 
+//Different nav bar items will appear depending if the user is admin or not
+import { useAuth } from "../hooks/useAuth";
+
 export function ResponsiveNavBar() {
+  let auth = useAuth();
   const navigate = useNavigate(); //For redirecting upon success
+  
   const { mutate, isLoading } = useMutation({
     mutationKey: "logout",
     mutationFn: clearCookie,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      // console.log("Cookie has been cleared");
+      console.log("Cookie has been cleared");
       navigate("/login");
     },
     onError: (error) => {
@@ -35,14 +40,39 @@ export function ResponsiveNavBar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    { id: "1", label: "Homepage", url: "/" },
-    { id: "2", label: "Pending Dogs", url: "/dogs/pending" },
-    { id: "3", label: "Adopted Dogs", url: "/dogs/adopted" },
-    { id: "4", label: "Dog Map", url: "/mapbox" },
-    { id: "5", label: "Profile", url: "/profile" },
-    { id: "6", label: "Add New Dog", url: "/new-dog" },
-    { id: "7", label: "Adoption Requests", url: "/adoption-requests/pending" },
+    { id: "1", label: "Homepage", url: "/", adminRequired: false },
+    {
+      id: "2",
+      label: "Pending Dogs",
+      url: "/dogs/pending",
+      adminRequired: false,
+    },
+    {
+      id: "3",
+      label: "Adopted Dogs",
+      url: "/dogs/adopted",
+      adminRequired: false,
+    },
+    { id: "4", label: "Dog Map", url: "/mapbox", adminRequired: false },
+    { id: "5", label: "Profile", url: "/profile", adminRequired: false },
+    { id: "6", label: "Add New Dog", url: "/new-dog", adminRequired: true },
+    {
+      id: "7",
+      label: "Adoption Requests",
+      url: "/adoption-requests/pending",
+      adminRequired: true,
+    },
   ];
+
+  let filteredArray;
+
+  if (!auth.currentUser || auth.currentUser.isAdmin === false) {
+    filteredArray = menuItems.filter((item) => item.adminRequired === false);
+  } else {
+    filteredArray = menuItems;
+  }
+
+  console.log("auth current user", auth.currentUser);
 
   return (
     <>
@@ -58,7 +88,7 @@ export function ResponsiveNavBar() {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          {menuItems.map((item) => {
+          {filteredArray.map((item) => {
             return (
               <NavbarItem key={item.id}>
                 <Link color="foreground" href={item.url}>
@@ -107,7 +137,7 @@ export function ResponsiveNavBar() {
         </NavbarContent>
 
         <NavbarMenu>
-          {menuItems.map((item, index) => (
+          {filteredArray.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
