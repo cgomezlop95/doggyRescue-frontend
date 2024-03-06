@@ -119,7 +119,7 @@ export function AdoptionRequestForm() {
     // console.log("auth current user id", auth.currentUser.id);
     // // mutate(data);
     // console.log("ENTRA");
-    // console.log("final data", { ...data, userId: auth.currentUser.id });
+    console.log("final data", { ...data, userId: auth.currentUser.id });
     mutate({ ...data, userId: auth.currentUser.id, dogId: dogData.dog.id });
   };
 

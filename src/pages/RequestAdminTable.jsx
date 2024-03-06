@@ -11,19 +11,26 @@ import {
   Tooltip,
   getKeyValue,
 } from "@nextui-org/react";
-import { EditIcon } from "../components/EditIcon";
-import { DeleteIcon } from "../components/DeleteIcon";
-import { EyeIcon } from "../components/EyeIcon";
-import { columns, requests } from "../service/requestTableData";
 import { useQuery } from "@tanstack/react-query";
 import { getAllRequests } from "../service/adoptionRequest";
 import { Link } from "react-router-dom";
+// import { DogIcon } from "../components/DogIcon";
+import PetsIcon from "@mui/icons-material/Pets";
+import { Button } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
 const statusColorMap = {
-  active: "success",
-  paused: "danger",
+  true: "success",
+  false: "danger",
   null: "warning",
 };
+
+const columns = [
+  { name: "DOG", uid: "name" },
+  { name: "REQUESTER", uid: "requester" },
+  { name: "STATUS", uid: "status" },
+  { name: "DETAILS", uid: "details" },
+];
 
 export function RequestAdminTable() {
   const { data: requestData, isLoading } = useQuery({
@@ -31,7 +38,7 @@ export function RequestAdminTable() {
     queryFn: getAllRequests,
   });
 
-  console.log(requestData);
+  // console.log(requestData);
 
   const renderCell = React.useCallback((request, columnKey) => {
     const cellValue = request[columnKey];
@@ -70,28 +77,12 @@ export function RequestAdminTable() {
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {request.requestApproved !== null
+              ? request.requestApproved
+                ? "Approved"
+                : "Rejected"
+              : "Pending"}
           </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
-              </span>
-            </Tooltip>
-            <Tooltip content="Edit user">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
-              </span>
-            </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
-              </span>
-            </Tooltip>
-          </div>
         );
       case "details":
         return (
@@ -99,7 +90,10 @@ export function RequestAdminTable() {
             key={requestId}
             to={`/adoption-request/${requestId.toString()}`}
           >
-            <button>Go to request</button>
+            <Button variant="contained" endIcon={<SendIcon />}>
+              Go to Request
+            </Button>
+            {/* <DogIcon /> */}
           </Link>
         );
       default:
@@ -125,7 +119,7 @@ export function RequestAdminTable() {
       </TableHeader>
       <TableBody items={requestData.adoptionRequests}>
         {(item) => (
-          <TableRow key={item.dogId}>
+          <TableRow key={item.userId + "_" + item.dogId}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
