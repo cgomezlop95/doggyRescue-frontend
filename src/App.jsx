@@ -11,16 +11,12 @@ import { DogForm } from "./pages/DogForm";
 import { DogList } from "./pages/DogList";
 import { DogCardDetailed } from "./pages/DogCardDetailed";
 import { Mapbox } from "./pages/Mapbox";
-import { SignUpBackup } from "./pages/SignupBackup";
-import { LoginBackup } from "./pages/LoginBackup";
 import { AdoptionRequestForm } from "./pages/AdoptionRequestForm";
 import { UpdateDogForm } from "./pages/UpdateDogForm";
-import { PendingRequests } from "./pages/PendingRequests";
-import { ApprovedRequests } from "./pages/ApprovedRequests";
-import { RejectedRequests } from "./pages/RejectedRequests";
 import { RequestAdminTable } from "./pages/RequestAdminTable";
 import { Profile } from "./pages/Profile";
 import { AdoptedDogList } from "./pages/AdoptedDogList";
+import { RequestDetailed } from "./pages/RequestDetailed";
 
 export function App() {
   return (
@@ -34,6 +30,11 @@ export function App() {
 
         <Route element={<RequireAdmin />}>
           <Route path="/new-dog" element={<DogForm />} />
+          <Route
+            path="/adoption-requests"
+            element={<RequestAdminTable />}
+          />
+          <Route path="/adoption-request/:id" element={<RequestDetailed />} />
         </Route>
 
         <Route path="/dogs/pending" element={<DogList />} />
@@ -43,18 +44,6 @@ export function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mapbox" element={<Mapbox />} />
-        <Route
-          path="/adoption-requests/pending"
-          element={<RequestAdminTable />}
-        />
-        <Route
-          path="/adoption-requests/approved"
-          element={<ApprovedRequests />}
-        />
-        <Route
-          path="/adoption-requests/rejected"
-          element={<RejectedRequests />}
-        />
       </Route>
     </Routes>
   );

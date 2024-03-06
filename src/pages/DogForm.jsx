@@ -11,6 +11,7 @@ import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
+import { Link } from "react-router-dom";
 
 export function DogForm() {
   const {
@@ -197,9 +198,16 @@ export function DogForm() {
         </Button>
 
         {isSuccess && (
-          <Box className="flex flex-col justify-center items-center mt-10 gap-3">
-            <Alert severity="success">Your dog was succesfully created. </Alert>
-          </Box>
+          <>
+            <Box className="flex flex-col justify-center items-center mt-10 gap-3">
+              <Alert severity="success">
+                Your dog was succesfully created.{" "}
+              </Alert>
+            </Box>
+            <Link to="/dogs/pending">
+              <Button>View All Pending Dogs</Button>
+            </Link>
+          </>
         )}
       </form>
     </>

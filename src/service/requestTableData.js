@@ -4,6 +4,7 @@ const columns = [
   { name: "REQUESTER", uid: "requester" },
   { name: "STATUS", uid: "status" },
   { name: "ACTIONS", uid: "actions" },
+  { name: "DETAILS", uid: "details" },
 ];
 
 const users = [

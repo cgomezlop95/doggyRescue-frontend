@@ -23,7 +23,7 @@ import { useAuth } from "../hooks/useAuth";
 export function ResponsiveNavBar() {
   let auth = useAuth();
   const navigate = useNavigate(); //For redirecting upon success
-  
+
   const { mutate, isLoading } = useMutation({
     mutationKey: "logout",
     mutationFn: clearCookie,
@@ -59,7 +59,7 @@ export function ResponsiveNavBar() {
     {
       id: "7",
       label: "Adoption Requests",
-      url: "/adoption-requests/pending",
+      url: "/adoption-requests",
       adminRequired: true,
     },
   ];

@@ -17,6 +17,7 @@ import { EyeIcon } from "../components/EyeIcon";
 import { columns, requests } from "../service/requestTableData";
 import { useQuery } from "@tanstack/react-query";
 import { getAllRequests } from "../service/adoptionRequest";
+import { Link } from "react-router-dom";
 
 const statusColorMap = {
   active: "success",
@@ -34,7 +35,8 @@ export function RequestAdminTable() {
 
   const renderCell = React.useCallback((request, columnKey) => {
     const cellValue = request[columnKey];
-
+    const requestId = request.userId + "_" + request.dogId;
+    console.log(requestId);
     switch (columnKey) {
       case "name":
         return (
@@ -91,6 +93,15 @@ export function RequestAdminTable() {
             </Tooltip>
           </div>
         );
+      case "details":
+        return (
+          <Link
+            key={requestId}
+            to={`/adoption-request/${requestId.toString()}`}
+          >
+            <button>Go to request</button>
+          </Link>
+        );
       default:
         return cellValue;
     }
@@ -124,5 +135,3 @@ export function RequestAdminTable() {
     </Table>
   );
 }
-
-//need to change the id
