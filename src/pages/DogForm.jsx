@@ -30,6 +30,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogName,
       isRequired: true,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -39,6 +40,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogAge,
       isRequired: true,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -48,6 +50,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogWeight,
       isRequired: true,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -57,6 +60,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogBreed,
       isRequired: true,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -66,6 +70,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogDescription,
       isRequired: false,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -75,6 +80,7 @@ export function DogForm() {
       type: "number",
       error: errors.longitude,
       isRequired: false,
+      patternValue: ".*",
       // defaultValue: "",
     },
     {
@@ -84,6 +90,7 @@ export function DogForm() {
       type: "number",
       error: errors.latitude,
       isRequired: false,
+      patternValue: ".*",
       // defaultValue: "",
     },
   ];
@@ -171,7 +178,8 @@ export function DogForm() {
               key={el.id}
               error={el.error}
               isRequired={el.isRequired}
-              defaultValue={el.defaultValue}
+              // defaultValue={el.defaultValue}
+              patternValue={el.patternValue}
             />
           );
         })}

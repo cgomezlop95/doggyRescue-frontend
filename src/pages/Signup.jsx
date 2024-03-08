@@ -4,9 +4,13 @@ import { postRegister } from "../service/auth";
 import { useNavigate } from "react-router-dom";
 import { SingleInput } from "../components/SingleInput";
 import { Button } from "@nextui-org/react";
+import { Checkbox } from "@nextui-org/react";
+import { useState } from "react";
 
 export function SignUp() {
   const navigate = useNavigate(); //For redirecting upon success
+  const [isSelected, setIsSelected] = useState(false); //For privacy policy
+
   const {
     register,
     control,
@@ -23,6 +27,7 @@ export function SignUp() {
       type: "string",
       error: errors.email,
       isRequired: true,
+      patternValue: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
     },
     {
       id: "2",
@@ -31,6 +36,7 @@ export function SignUp() {
       type: "password",
       error: errors.password,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "3",
@@ -39,6 +45,7 @@ export function SignUp() {
       type: "string",
       error: errors.firstName,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "4",
@@ -47,6 +54,7 @@ export function SignUp() {
       type: "string",
       error: errors.lastName,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "5",
@@ -55,6 +63,7 @@ export function SignUp() {
       type: "string",
       error: errors.phoneNumber,
       isRequired: false,
+      patternValue: ".*",
     },
   ];
 
@@ -87,6 +96,7 @@ export function SignUp() {
               type={el.type}
               error={el.error}
               isRequired={el.isRequired}
+              patternValue={el.patternValue}
             />
           );
         })}
@@ -98,6 +108,15 @@ export function SignUp() {
         >
           Submit
         </Button>
+        <div className="flex flex-col gap-2">
+          <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
+            By signing up, you expressly agree to our{" "}
+            <a href="/privacy-policy">Privacy Policy</a>
+          </Checkbox>
+          <p className="text-default-500">
+            Selected: {isSelected ? "true" : "false"}
+          </p>
+        </div>
       </form>
     </div>
   );

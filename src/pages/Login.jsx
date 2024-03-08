@@ -23,6 +23,7 @@ export function Login() {
       type: "string",
       error: errors.email,
       isRequired: true,
+      patternValue: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
     },
     {
       id: "2",
@@ -31,6 +32,7 @@ export function Login() {
       type: "password",
       error: errors.password,
       isRequired: true,
+      patternValue: ".*",
     },
   ];
 
@@ -67,6 +69,7 @@ export function Login() {
               type={el.type}
               error={el.error}
               isRequired={el.isRequired}
+              patternValue={el.patternValue}
             />
           );
         })}

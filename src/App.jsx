@@ -17,6 +17,7 @@ import { RequestAdminTable } from "./pages/RequestAdminTable";
 import { Profile } from "./pages/Profile";
 import { AdoptedDogList } from "./pages/AdoptedDogList";
 import { RequestDetailed } from "./pages/RequestDetailed";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 
 export function App() {
   return (
@@ -30,10 +31,7 @@ export function App() {
 
         <Route element={<RequireAdmin />}>
           <Route path="/new-dog" element={<DogForm />} />
-          <Route
-            path="/adoption-requests"
-            element={<RequestAdminTable />}
-          />
+          <Route path="/adoption-requests" element={<RequestAdminTable />} />
           <Route path="/adoption-request/:id" element={<RequestDetailed />} />
         </Route>
 
@@ -44,6 +42,7 @@ export function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mapbox" element={<Mapbox />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Route>
     </Routes>
   );
