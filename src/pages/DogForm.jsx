@@ -32,7 +32,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogName,
       isRequired: true,
-      patternValue: "\\S+",
+      patternValue: ".*",
     },
     {
       id: "2",
@@ -59,7 +59,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogBreed,
       isRequired: true,
-      patternValue: "\\S+",
+      patternValue: ".*",
     },
     {
       id: "5",
@@ -68,7 +68,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogDescription,
       isRequired: false,
-      patternValue: "\\S+",
+      patternValue: ".*",
     },
     {
       id: "6",
@@ -77,7 +77,7 @@ export function DogForm() {
       type: "number",
       error: errors.longitude,
       isRequired: false,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^(1[0-9]|20|[1-9])$", //Positive or negative numbers
     },
     {
       id: "7",
@@ -86,7 +86,7 @@ export function DogForm() {
       type: "number",
       error: errors.latitude,
       isRequired: false,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^(1[0-9]|20|[1-9])$", //Positive or negative numbers
     },
   ];
 
@@ -160,7 +160,13 @@ export function DogForm() {
         className="flex flex-col justify-center items-center mt-20 gap-3"
         // className="max-w-xs"
       >
-        <SelectInput control={control} name="dogSex" label="Gender" />
+        <SelectInput
+          control={control}
+          name="dogSex"
+          label="Gender"
+          isRequired={true}
+          error={errors.dogSex}
+        />
 
         {inputStringArray.map((el) => {
           return (
@@ -186,6 +192,7 @@ export function DogForm() {
                 name={el.name}
                 label={el.label}
                 key={el.id}
+                defaultValue={false}
               />
             );
           })}
@@ -207,7 +214,7 @@ export function DogForm() {
               </Alert>
             </Box>
             <Link to="/dogs/pending">
-              <Button>View All Pending Dogs</Button>
+              <Button color="primary">View All Pending Dogs</Button>
             </Link>
           </>
         )}
@@ -215,3 +222,5 @@ export function DogForm() {
     </>
   );
 }
+
+//I cannot enter negative numbers?

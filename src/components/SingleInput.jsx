@@ -18,8 +18,8 @@ export function SingleInput({
 }) {
   const [isVisible, setIsVisible] = useState(false); //For passwords
   const toggleVisibility = () => setIsVisible(!isVisible); //For passwords
-  console.log(patternValue);
-  console.log(name);
+  // console.log(patternValue);
+  // console.log(name);
   return (
     <Controller
       name={name}
