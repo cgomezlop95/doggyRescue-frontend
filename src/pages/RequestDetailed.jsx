@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getRequestById } from "../service/adoptionRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { approveRequest, denyRequest } from "../service/adoptionRequest";
 
 export const RequestDetailed = () => {
@@ -20,7 +20,7 @@ export const RequestDetailed = () => {
       mutationKey: ["approveRequest", id],
       mutationFn: () => approveRequest(id),
       onSuccess: () => {
-        // queryClient.invalidateQueries
+        queryClient.invalidateQueries(["singleRequest", id]);
         console.log("success, request approved");
         navigate("/adoption-requests");
       },
@@ -30,7 +30,7 @@ export const RequestDetailed = () => {
     mutationKey: ["denyRequest", id],
     mutationFn: () => denyRequest(id),
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["dogs"] });
+      queryClient.invalidateQueries(["singleRequest", id]);
       console.log("success, request denied");
       navigate("/adoption-requests");
     },
@@ -53,9 +53,27 @@ export const RequestDetailed = () => {
       </p>
       <p>Hours away: {requestData.adoptionRequest.dailyHoursAway}</p>
       <p>Has Garden: {requestData.adoptionRequest.hasGarden ? "Yes" : "No"}</p>
-      <Button onClick={approveRequestMutation}>Approve</Button>
-      <Button onClick={denyRequestMutation}>Deny</Button>
-      <Button>Go back</Button>
+      <p>
+        Request Status:{" "}
+        {requestData.adoptionRequest.requestApproved === true
+          ? "Approved"
+          : requestData.adoptionRequest.requestApproved === false
+          ? "Rejected"
+          : "Pending"}
+      </p>
+      {requestData.adoptionRequest.requestApproved === null && (
+        <Box>
+          <Button onClick={() => approveRequestMutation()}>Approve</Button>
+          <Button onClick={() => denyRequestMutation()}>Deny</Button>
+        </Box>
+      )}
+
+      <Link to="/adoption-requests">
+        <Button>Go back</Button>
+      </Link>
+
+      {approveSuccess && <p>You have approved the request succesfully</p>}
+      {denySuccess && <p>You have rejected the request succesfully</p>}
     </>
   );
 };

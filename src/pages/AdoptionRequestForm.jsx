@@ -28,6 +28,7 @@ export function AdoptionRequestForm() {
       type: "number",
       error: errors.adopterAge,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "2",
@@ -36,6 +37,7 @@ export function AdoptionRequestForm() {
       type: "number",
       error: errors.dailyHoursAway,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "3",
@@ -44,6 +46,7 @@ export function AdoptionRequestForm() {
       type: "string",
       error: errors.OtherPets,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "4",
@@ -52,6 +55,7 @@ export function AdoptionRequestForm() {
       type: "number",
       error: errors.numberOfTrips,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "5",
@@ -60,6 +64,7 @@ export function AdoptionRequestForm() {
       type: "number",
       error: errors.numberOfTrips,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "6",
@@ -68,6 +73,7 @@ export function AdoptionRequestForm() {
       type: "number",
       error: errors.numberOfTrips,
       isRequired: true,
+      patternValue: ".*",
     },
     {
       id: "7",
@@ -76,6 +82,7 @@ export function AdoptionRequestForm() {
       type: "string",
       error: errors.adopterDescription,
       isRequired: true,
+      patternValue: ".*",
     },
   ];
 
@@ -153,6 +160,7 @@ export function AdoptionRequestForm() {
               key={el.id}
               error={el.error}
               isRequired={el.isRequired}
+              patternValue={el.patternValue}
             />
           );
         })}
@@ -165,6 +173,7 @@ export function AdoptionRequestForm() {
                 name={el.name}
                 label={el.label}
                 key={el.id}
+                defaultValue={false}
               />
             );
           })}

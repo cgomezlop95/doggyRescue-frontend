@@ -15,28 +15,31 @@ export function Mapbox() {
 
   useEffect(() => {
     const map = new mapboxgl.Map({
-      container: "map", // container id
-      style: "mapbox://styles/mapbox/streets-v11", // style URL
-      center: [-3.7038, 40.4168], // Madrid's coordinates [lng, lat]
-      zoom: 12, // Adjust zoom level as needed
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-3.7038, 40.4168], // Madrid's coordinates
+      zoom: 12,
     });
 
-    dogData?.dogs.forEach((dog) => {
-      if (dog.latitude && dog.longitude) {
-        const coordinates = [dog.longitude, dog.latitude];
-        console.log(coordinates);
-        const dogId = dog.id;
-        const newMarker = new mapboxgl.Marker()
-          .setLngLat(coordinates)
-          .setPopup(new mapboxgl.Popup().setHTML(dogId))
-          .addTo(map);
-        console.log(newMarker);
-      }
+    const dogsWithCoordinates = dogData?.dogs.filter(
+      (dog) => dog.latitude && dog.longitude
+    ); // Should return all dogs
+    console.log("dogsWithCoordinates", dogsWithCoordinates);
+
+    dogsWithCoordinates?.forEach((dog) => {
+      console.log("coordinates", dog.longitude, dog.latitude);
+      console.log(typeof dog.latitude);
+      console.log(typeof dog.longitude);
+      const dogCoordinates = [dog.longitude, dog.latitude];
+      console.log("entra");
+      new mapboxgl.Marker()
+        .setLngLat(dogCoordinates) 
+        .setPopup(new mapboxgl.Popup().setHTML(`<p>Dog ID: ${dog.id}</p>`))
+        .addTo(map);
     });
 
-    // Clean up
     return () => map.remove();
-  }, []);
+  }, [dogData]);
 
   return <div id="map" style={{ width: "100%", height: "800px" }} />;
 }

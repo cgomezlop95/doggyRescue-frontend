@@ -68,11 +68,18 @@ const getRequestById = async (id) => {
 
 const approveRequest = async (id) => {
   const { data } = await api.put(`/adoption-request/approve/${id}`);
+  console.log("entra en approve");
   return data;
 };
 
 const denyRequest = async (id) => {
   const { data } = await api.put(`/adoption-request/deny/${id}`);
+  console.log("entra en deny");
+  return data;
+};
+
+const getMyRequests = async () => {
+  const { data } = await api.get("/my-adoption-requests");
   return data;
 };
 
@@ -81,5 +88,6 @@ export {
   getAllRequests,
   getRequestById,
   approveRequest,
-  denyRequest
+  denyRequest,
+  getMyRequests,
 };
