@@ -14,11 +14,12 @@ export function SingleInput({
   isRequired,
   label,
   defaultValue,
-  patternValue
+  patternValue,
 }) {
   const [isVisible, setIsVisible] = useState(false); //For passwords
   const toggleVisibility = () => setIsVisible(!isVisible); //For passwords
-
+  console.log(patternValue);
+  console.log(name);
   return (
     <Controller
       name={name}

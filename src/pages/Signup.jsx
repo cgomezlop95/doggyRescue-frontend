@@ -6,10 +6,13 @@ import { SingleInput } from "../components/SingleInput";
 import { Button } from "@nextui-org/react";
 import { Checkbox } from "@nextui-org/react";
 import { useState } from "react";
+import { Alert } from "@mui/material";
 
 export function SignUp() {
   const navigate = useNavigate(); //For redirecting upon success
   const [isSelected, setIsSelected] = useState(false); //For privacy policy
+  const [privacyPolicyError, setPrivacyPolicyError] = useState("");
+  //The last sentece is for the error message if the user did not sign the privacy policy
 
   const {
     register,
@@ -75,8 +78,17 @@ export function SignUp() {
     },
   });
 
+  // const onSubmit = async (data) => {
+  //   signupMutation(data);
+  // };
+
   const onSubmit = async (data) => {
-    signupMutation(data);
+    if (!isSelected) {
+      setPrivacyPolicyError("You must agree to the privacy policy to sign up.");
+      return; // Prevent the form submission
+    }
+    setPrivacyPolicyError(""); // Clear any previous error message
+    signupMutation(data); // Proceed with the signup mutation
   };
 
   return (
@@ -113,9 +125,14 @@ export function SignUp() {
             By signing up, you expressly agree to our{" "}
             <a href="/privacy-policy">Privacy Policy</a>
           </Checkbox>
-          <p className="text-default-500">
+          {/* <p className="text-default-500">
             Selected: {isSelected ? "true" : "false"}
-          </p>
+          </p> */}
+          {privacyPolicyError && (
+            <Alert variant="filled" severity="error">
+              {privacyPolicyError}
+            </Alert>
+          )}
         </div>
       </form>
     </div>

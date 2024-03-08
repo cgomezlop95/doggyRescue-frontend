@@ -11,9 +11,11 @@ import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function DogForm() {
+  const navigate = useNavigate(); //For redirecting upon success
+
   const {
     control,
     handleSubmit,
@@ -30,8 +32,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogName,
       isRequired: true,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "\\S+",
     },
     {
       id: "2",
@@ -40,8 +41,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogAge,
       isRequired: true,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "3",
@@ -50,8 +50,7 @@ export function DogForm() {
       type: "number",
       error: errors.dogWeight,
       isRequired: true,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "4",
@@ -60,8 +59,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogBreed,
       isRequired: true,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "\\S+",
     },
     {
       id: "5",
@@ -70,8 +68,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogDescription,
       isRequired: false,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "\\S+",
     },
     {
       id: "6",
@@ -80,8 +77,7 @@ export function DogForm() {
       type: "number",
       error: errors.longitude,
       isRequired: false,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "7",
@@ -90,8 +86,7 @@ export function DogForm() {
       type: "number",
       error: errors.latitude,
       isRequired: false,
-      patternValue: ".*",
-      // defaultValue: "",
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
   ];
 
@@ -170,15 +165,14 @@ export function DogForm() {
         {inputStringArray.map((el) => {
           return (
             <SingleInput
+              key={el.id}
               control={control}
               resetField={resetField}
               name={el.name}
               label={el.label}
               type={el.type}
-              key={el.id}
               error={el.error}
               isRequired={el.isRequired}
-              // defaultValue={el.defaultValue}
               patternValue={el.patternValue}
             />
           );
