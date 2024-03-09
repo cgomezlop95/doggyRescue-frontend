@@ -18,6 +18,7 @@ import { Profile } from "./pages/Profile";
 import { AdoptedDogList } from "./pages/AdoptedDogList";
 import { RequestDetailed } from "./pages/RequestDetailed";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { UpdateUserForm} from "./pages/UpdateUserForm";
 
 export function App() {
   return (
@@ -35,6 +36,7 @@ export function App() {
           {/* <Route path="/" element={<Homepage />} /> */}
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/update" element={<UpdateUserForm />} />
           <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         </Route>
 

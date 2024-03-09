@@ -1,8 +1,9 @@
 import { useAuth } from "../hooks/useAuth";
 import { getMyRequests } from "../service/adoptionRequest";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Chip, Input } from "@nextui-org/react";
 import { UserIcon } from "../components/UserIcon";
+import { Link } from "react-router-dom";
 
 export const Profile = () => {
   let auth = useAuth();
@@ -31,6 +32,9 @@ export const Profile = () => {
         <span className="font-bold text-lg ml-4">
           {auth.currentUser.firstName} {auth.currentUser.lastName}
         </span>
+        {/* <Chip size="lg">
+          {auth.currentUser.firstName} {auth.currentUser.lastName}
+        </Chip> */}
       </div>
 
       <div className="grid grid-cols-2 gap-4 max-w-md mx-auto pb-8">
@@ -52,9 +56,11 @@ export const Profile = () => {
       </div>
 
       <div className="flex justify-center items-center py-4 gap-4">
-        <Button color="danger" variant="bordered" startContent={<UserIcon />}>
-          Update Profile
-        </Button>
+        <Link to="/profile/update">
+          <Button color="danger" variant="bordered" startContent={<UserIcon />}>
+            Update Profile
+          </Button>
+        </Link>
         <Button color="danger" variant="bordered">
           View Adoption Requests
         </Button>
