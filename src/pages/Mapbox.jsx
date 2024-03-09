@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,8 @@ export function Mapbox() {
     queryKey: ["dogs"],
     queryFn: getPendingDogs,
   });
+
+  const [selectedDog, setSelectedDog] = useState(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -41,23 +43,55 @@ export function Mapbox() {
       el.style.height = "75px";
       el.style.backgroundSize = "100%";
       //Custom marker//
+
+      const popup = new mapboxgl.Popup().setHTML(
+        `<div>
+          <a href="/dog/${dog.id}" target="_blank">
+            <p>${dog.dogName} - ${dog.dogBreed}</p>
+            <p>${dog.dogAge} years</p>
+          </a>
+        </div>`
+      );
+
       new mapboxgl.Marker(el)
         .setLngLat(dogCoordinates)
-        .setPopup(
-          new mapboxgl.Popup().setHTML(
-            `<div>
-              <a href="/dog/${dog.id}" target="_blank">
-                <p>${dog.dogName} - ${dog.dogBreed}</p>
-                <p>${dog.dogAge} years</p>
-              </a>
-            </div>`
-          )
-        )
+        .setPopup(popup)
         .addTo(map);
+
+      popup.on("open", () => setSelectedDog(dog));
+      console.log("selectedDog", selectedDog);
     });
 
     return () => map.remove();
-  }, [dogData]);
+  }, [dogData]); //Add selectedDog into the array?
 
-  return <div id="map" style={{ width: "100%", height: "800px" }} />;
+  // return <div id="map" style={{ width: "100%", height: "800px" }} />;
+
+  return (
+    <div style={{ display: "flex", height: "800px" }}>
+      <div
+        id="sidebar"
+        style={{
+          width: "300px",
+          backgroundColor: "#f8f9fa",
+          padding: "20px",
+          overflowY: "auto",
+        }}
+      >
+        <h2>Sidebar Title</h2>
+        {selectedDog ? (
+          <>
+            <p>{selectedDog.dogName}</p>
+            {/* Render other dog details here */}
+          </>
+        ) : (
+          <p>Select a dog to see details</p>
+        )}
+      </div>
+
+      <div id="map" style={{ flexGrow: 1 }} />
+    </div>
+  );
 }
+
+//Resize markers depending on the zoom?

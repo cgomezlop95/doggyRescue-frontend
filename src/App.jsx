@@ -23,10 +23,19 @@ export function App() {
   return (
     <Routes>
       <Route element={<ResponsiveNavBar />}>
+        <Route path="/" element={<DogList />} />
+        <Route path="/dogs/adopted" element={<AdoptedDogList />} />
+        <Route path="dog/:id" element={<DogCardDetailed />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/mapbox" element={<Mapbox />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<Homepage />} />
+          {/* <Route path="/" element={<Homepage />} /> */}
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         </Route>
 
         <Route element={<RequireAdmin />}>
@@ -34,15 +43,6 @@ export function App() {
           <Route path="/adoption-requests" element={<RequestAdminTable />} />
           <Route path="/adoption-request/:id" element={<RequestDetailed />} />
         </Route>
-
-        <Route path="/dogs/pending" element={<DogList />} />
-        <Route path="/dogs/adopted" element={<AdoptedDogList />} />
-        <Route path="dog/:id" element={<DogCardDetailed />} />
-        <Route path="/update-dog/:id" element={<UpdateDogForm />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mapbox" element={<Mapbox />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Route>
     </Routes>
   );

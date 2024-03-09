@@ -28,7 +28,9 @@ export function ResponsiveNavBar() {
     mutationKey: "logout",
     mutationFn: clearCookie,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      queryClient.invalidateQueries({
+        queryKey: ["currentUser"],
+      });
       console.log("Cookie has been cleared");
       navigate("/login");
     },
@@ -40,33 +42,55 @@ export function ResponsiveNavBar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    { id: "1", label: "Homepage", url: "/", adminRequired: false },
     {
-      id: "2",
-      label: "Pending Dogs",
-      url: "/dogs/pending",
+      id: "1",
+      label: "Homepage",
+      url: "/",
       adminRequired: false,
+      authRequired: false,
     },
     {
-      id: "3",
+      id: "2",
       label: "Adopted Dogs",
       url: "/dogs/adopted",
       adminRequired: false,
+      authRequired: false,
     },
-    { id: "4", label: "Dog Map", url: "/mapbox", adminRequired: false },
-    { id: "5", label: "Profile", url: "/profile", adminRequired: false },
-    { id: "6", label: "Add New Dog", url: "/new-dog", adminRequired: true },
     {
-      id: "7",
+      id: "3",
+      label: "Dog Map",
+      url: "/mapbox",
+      adminRequired: false,
+      authRequired: false,
+    },
+    {
+      id: "4",
+      label: "Profile",
+      url: "/profile",
+      adminRequired: false,
+      authRequired: true,
+    },
+    {
+      id: "5",
+      label: "Add New Dog",
+      url: "/new-dog",
+      adminRequired: true,
+      authRequired: true,
+    },
+    {
+      id: "6",
       label: "Adoption Requests",
       url: "/adoption-requests",
       adminRequired: true,
+      authRequired: true,
     },
   ];
 
   let filteredArray;
 
-  if (!auth.currentUser || auth.currentUser.isAdmin === false) {
+  if (!auth.currentUser) {
+    filteredArray = menuItems.filter((item) => item.authRequired === false);
+  } else if (auth.currentUser.isAdmin === false) {
     filteredArray = menuItems.filter((item) => item.adminRequired === false);
   } else {
     filteredArray = menuItems;

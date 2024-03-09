@@ -41,7 +41,7 @@ export function Login() {
     mutationFn: postLogin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      navigate("/dogs/pending");
+      navigate("/"); //Redirect to homepage
     },
     onError: (error) => {
       console.error("Error al loguear el usuario:", error);

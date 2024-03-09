@@ -17,7 +17,8 @@ import { Link } from "react-router-dom";
 // import { DogIcon } from "../components/DogIcon";
 import PetsIcon from "@mui/icons-material/Pets";
 import { Button } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
+import { EyeIcon } from "../components/EyeIcon";
 
 const statusColorMap = {
   true: "success",
@@ -85,16 +86,25 @@ export function RequestAdminTable() {
           </Chip>
         );
       case "details":
+        // return (
+        //   <Link
+        //     key={requestId}
+        //     to={`/adoption-request/${requestId.toString()}`}
+        //   >
+        //     <Button variant="contained" endIcon={<SendIcon />}>
+        //       Go to Request
+        //     </Button>
+        //     {/* <DogIcon /> */}
+        //   </Link>
+        // );
         return (
-          <Link
-            key={requestId}
-            to={`/adoption-request/${requestId.toString()}`}
-          >
-            <Button variant="contained" endIcon={<SendIcon />}>
-              Go to Request
-            </Button>
-            {/* <DogIcon /> */}
-          </Link>
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <EyeIcon />
+              </span>
+            </Tooltip>
+          </div>
         );
       default:
         return cellValue;
