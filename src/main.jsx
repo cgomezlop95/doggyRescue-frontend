@@ -12,7 +12,7 @@ export const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <NextUIProvider>
@@ -21,6 +21,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </AuthProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>
 );
