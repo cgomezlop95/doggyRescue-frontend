@@ -7,12 +7,16 @@ import { Button } from "@nextui-org/react";
 import { Checkbox } from "@nextui-org/react";
 import { useState } from "react";
 import { Alert } from "@mui/material";
+import { storage } from "../config/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export function SignUp() {
   const navigate = useNavigate(); //For redirecting upon success
   const [isSelected, setIsSelected] = useState(false); //For privacy policy
   const [privacyPolicyError, setPrivacyPolicyError] = useState("");
   //The last sentece is for the error message if the user did not sign the privacy policy
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
 
   const {
     register,
@@ -70,6 +74,13 @@ export function SignUp() {
     },
   ];
 
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+      console.log(e.target.files[0]);
+    }
+  };
+
   const { mutate: signupMutation } = useMutation({
     mutationKey: "signup",
     mutationFn: postRegister,
@@ -87,9 +98,22 @@ export function SignUp() {
     if (!isSelected) {
       setPrivacyPolicyError("You must agree to the privacy policy to sign up.");
       return; // Prevent the form submission
+    } else if (image) {
+      const storageRef = ref(storage, `images/${image.name}`);
+      await uploadBytes(storageRef, image);
+      const downloadURL = await getDownloadURL(storageRef);
+      setUrl(downloadURL);
+      console.log("Archivo disponible en", downloadURL);
+      console.log({ ...data, userPhotoURL: downloadURL });
+      setPrivacyPolicyError(""); // Clear any previous error message
+      signupMutation({ ...data, userPhotoURL: downloadURL }); //await here ?
+    } else {
+      console.log(data);
+      setPrivacyPolicyError(""); // Clear any previous error message
+      signupMutation(data);
     }
-    setPrivacyPolicyError(""); // Clear any previous error message
-    signupMutation(data); // Proceed with the signup mutation
+    // setPrivacyPolicyError(""); // Clear any previous error message
+    // signupMutation(data); // Proceed with the signup mutation
   };
 
   return (
@@ -113,6 +137,8 @@ export function SignUp() {
             />
           );
         })}
+
+        <input type="file" onChange={handleChange} />
 
         <Button
           color="primary"

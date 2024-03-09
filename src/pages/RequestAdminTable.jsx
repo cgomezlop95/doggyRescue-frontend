@@ -67,7 +67,7 @@ export function RequestAdminTable() {
                 " - " +
                 request.user.email}
             </p>
-            <p>{request.adopterAge}</p>
+            <p>{request.adopterAge} years</p>
           </div>
         );
       case "status":
@@ -101,7 +101,9 @@ export function RequestAdminTable() {
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
+                <Link to={`/adoption-request/${requestId.toString()}`}>
+                  <EyeIcon />
+                </Link>
               </span>
             </Tooltip>
           </div>

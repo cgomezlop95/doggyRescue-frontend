@@ -78,8 +78,10 @@ const denyRequest = async (id) => {
   return data;
 };
 
-const getMyRequests = async () => {
-  const { data } = await api.get("/my-adoption-requests");
+const getMyRequests = async (userId) => {
+  const { data } = await api.get("/my-adoption-requests", {
+    params: { userId: userId }, // Adjust the query param key according to your backend's expectations
+  });
   return data;
 };
 

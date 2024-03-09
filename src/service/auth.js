@@ -14,6 +14,7 @@ const postRegister = async ({
   firstName,
   lastName,
   phoneNumber,
+  userPhotoURL,
 }) => {
   const { data } = await api.post("/auth/register", {
     email,
@@ -21,6 +22,7 @@ const postRegister = async ({
     firstName,
     lastName,
     phoneNumber,
+    userPhotoURL,
   });
   return data;
 };

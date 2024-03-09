@@ -1,30 +1,64 @@
 import { useAuth } from "../hooks/useAuth";
 import { getMyRequests } from "../service/adoptionRequest";
 import { useQuery } from "@tanstack/react-query";
+import { Button, Input } from "@nextui-org/react";
+import { UserIcon } from "../components/UserIcon";
 
 export const Profile = () => {
   let auth = useAuth();
+  const userId = auth.currentUser.id;
+  console.log("userId", userId);
   const { data: myRequestData, isLoading } = useQuery({
-    queryKey: ["myRequests"],
-    queryFn: getMyRequests,
+    queryKey: ["myRequests", userId],
+    queryFn: () => getMyRequests(userId),
   });
 
   if (isLoading) {
-    return <h1>Loading dogs</h1>;
+    return <h1>Loading</h1>;
   }
 
-  console.log(myRequestData);
+  // console.log("myRequestData", myRequestData);
+  // console.log(auth.currentUser);
 
   return (
     <>
-      <h1>Profile</h1>
-      <h3>First Name: {auth.currentUser.firstName}</h3>
-      <h3>Last Name: {auth.currentUser.lastName}</h3>
-      <h3>Phone Number: {auth.currentUser.phoneNumber}</h3>
-      <h3>Email Address: {auth.currentUser.email}</h3>
-      {myRequestData.adoptionRequests.map((el) => {
-        return <p>{el.adopterAge}</p>;
-      })}
+      <div className="flex items-center justify-center pt-8 pb-4">
+        <img
+          src={auth.currentUser.userPhotoURL}
+          alt="User"
+          className="max-h-[25vh] object-contain"
+        />
+        <span className="font-bold text-lg ml-4">
+          {auth.currentUser.firstName} {auth.currentUser.lastName}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 max-w-md mx-auto pb-8">
+        {Object.entries(auth.currentUser)
+          .filter(
+            ([key]) =>
+              !["password", "id", "updatedAt", "userPhotoURL"].includes(key)
+          )
+          .map(([key, value]) => (
+            <Input
+              key={key} // Use the object key as the React key for each input
+              label={key.charAt(0).toUpperCase() + key.slice(1)} // Capitalize the first letter of the label
+              value={value}
+              color="default"
+              variant="bordered"
+              className="w-full"
+            />
+          ))}
+      </div>
+
+      <div className="flex justify-center items-center py-4 gap-4">
+        <Button color="danger" variant="bordered" startContent={<UserIcon />}>
+          Update Profile
+        </Button>
+        <Button color="danger" variant="bordered">
+          View Adoption Requests
+        </Button>
+      </div>
     </>
   );
 };
