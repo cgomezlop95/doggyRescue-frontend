@@ -23,18 +23,36 @@ export function Mapbox() {
 
     const dogsWithCoordinates = dogData?.dogs.filter(
       (dog) => dog.latitude && dog.longitude
-    ); // Should return all dogs
-    console.log("dogsWithCoordinates", dogsWithCoordinates);
+    );
+    // console.log("dogsWithCoordinates", dogsWithCoordinates);
 
     dogsWithCoordinates?.forEach((dog) => {
-      console.log("coordinates", dog.longitude, dog.latitude);
-      console.log(typeof dog.latitude);
-      console.log(typeof dog.longitude);
+      // console.log("coordinates", dog.longitude, dog.latitude);
+      // console.log(typeof dog.latitude);
+      // console.log(typeof dog.longitude);
+      // console.log(dog.dogPhotoURL)
       const dogCoordinates = [dog.longitude, dog.latitude];
-      console.log("entra");
-      new mapboxgl.Marker()
-        .setLngLat(dogCoordinates) 
-        .setPopup(new mapboxgl.Popup().setHTML(`<p>Dog ID: ${dog.id}</p>`))
+      //Custom marker with dog icon//
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.backgroundImage = `url(${dog.dogPhotoURL})`;
+      el.style.backgroundRepeat = "no-repeat";
+      el.style.width = "75px";
+      el.style.height = "75px";
+      el.style.backgroundSize = "100%";
+      //Custom marker//
+      new mapboxgl.Marker(el)
+        .setLngLat(dogCoordinates)
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<div>
+              <a href="/dog/${dog.id}" target="_blank">
+                <p>${dog.dogName} - ${dog.dogBreed}</p>
+                <p>${dog.dogAge} years</p>
+              </a>
+            </div>`
+          )
+        )
         .addTo(map);
     });
 
