@@ -24,11 +24,13 @@ export const Profile = () => {
   return (
     <>
       <div className="flex items-center justify-center pt-8 pb-4">
-        <img
-          src={auth.currentUser.userPhotoURL}
-          alt="User"
-          className="max-h-[25vh] object-contain"
-        />
+        {auth.currentUser.userPhotoURL && (
+          <img
+            src={auth.currentUser.userPhotoURL}
+            alt="User"
+            className="max-h-[25vh] object-contain"
+          />
+        )}
         <span className="font-bold text-lg ml-4">
           {auth.currentUser.firstName} {auth.currentUser.lastName}
         </span>
@@ -41,7 +43,7 @@ export const Profile = () => {
         {Object.entries(auth.currentUser)
           .filter(
             ([key]) =>
-              !["password", "id", "updatedAt", "userPhotoURL"].includes(key)
+              !["password", "id", "updatedAt", "userPhotoURL", "isAdmin"].includes(key)
           )
           .map(([key, value]) => (
             <Input
