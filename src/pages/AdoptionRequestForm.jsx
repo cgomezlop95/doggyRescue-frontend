@@ -45,7 +45,7 @@ export function AdoptionRequestForm() {
       label: "Specify which other pets you have",
       type: "string",
       error: errors.OtherPets,
-      isRequired: true,
+      isRequired: false,
       patternValue: ".*",
     },
     {
@@ -138,36 +138,46 @@ export function AdoptionRequestForm() {
 
   return (
     <>
-      <h1>Adoption Request Form for {dogData.dog.dogName}</h1>
-      <img
-        src={dogData.dog.dogPhotoURL}
-        alt={dogData.dog.dogName}
-        className="max-w-md"
-      />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center mt-20 gap-3"
-        // className="max-w-xs"
-      >
-        {inputStringArray.map((el) => {
-          return (
-            <SingleInput
-              control={control}
-              resetField={resetField}
-              name={el.name}
-              label={el.label}
-              type={el.type}
-              key={el.id}
-              error={el.error}
-              isRequired={el.isRequired}
-              patternValue={el.patternValue}
-            />
-          );
-        })}
+      <h1 className="text-center my-5">
+        Adoption Request Form for {dogData.dog.dogName}
+      </h1>
 
-        <div className="flex flex-wrap gap-4 max-w-sm">
-          {booleanInputArray.map((el) => {
-            return (
+      <div className="flex justify-center items-center gap-8 m-8">
+        {/* Left Column: Image */}
+        <div className="overflow-hidden rounded-full w-48 h-48 border border-gray-200 shadow-lg">
+          <img
+            src={dogData.dog.dogPhotoURL}
+            alt={`Photo of ${dogData.dog.dogName}`}
+            className="object-cover w-full h-full"
+          />
+        </div>
+
+        {/* Middle Column: Input Fields */}
+        <div className="flex-1">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            {inputStringArray.map((el) => (
+              <SingleInput
+                control={control}
+                resetField={resetField}
+                name={el.name}
+                label={el.label}
+                type={el.type}
+                key={el.id}
+                error={el.error}
+                isRequired={el.isRequired}
+                patternValue={el.patternValue}
+              />
+            ))}
+          </form>
+        </div>
+
+        {/* Right Column: Boolean Group */}
+        <div className="flex-1">
+          <div className="flex flex-col gap-2">
+            {booleanInputArray.map((el) => (
               <BooleanGroup
                 control={control}
                 name={el.name}
@@ -175,22 +185,25 @@ export function AdoptionRequestForm() {
                 key={el.id}
                 defaultValue={false}
               />
-            );
-          })}
+            ))}
+          </div>
         </div>
+      </div>
 
-        <Button color="primary" type="submit">
+      {/* Submit Button - Positioned below the columns */}
+      <div className="text-center mt-6">
+        <Button color="primary" type="submit" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
+      </div>
 
-        {isSuccess && (
-          <Box className="flex flex-col justify-center items-center mt-10 gap-3">
-            <Alert severity="success">
-              Your adoption request was succesfully created.{" "}
-            </Alert>
-          </Box>
-        )}
-      </form>
+      {isSuccess && (
+        <Box className="mt-6 text-center">
+          <Alert severity="success">
+            Your adoption request was successfully created.
+          </Alert>
+        </Box>
+      )}
     </>
   );
 }

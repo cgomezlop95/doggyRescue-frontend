@@ -213,7 +213,7 @@ export function DogForm() {
                 Your dog was succesfully created.{" "}
               </Alert>
             </Box>
-            <Link to="/dogs/pending">
+            <Link to="/">
               <Button color="primary">View All Pending Dogs</Button>
             </Link>
           </>

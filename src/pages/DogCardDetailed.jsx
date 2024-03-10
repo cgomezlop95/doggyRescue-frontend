@@ -20,6 +20,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { getDogById } from "../service/dog";
 import { useQuery } from "@tanstack/react-query";
 import { Box } from "@mui/material";
+import { useAuth } from "../hooks/useAuth";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,6 +35,7 @@ const ExpandMore = styled((props) => {
 
 export function DogCardDetailed() {
   const { id } = useParams();
+  let auth = useAuth();
 
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dog", id],
@@ -53,7 +55,7 @@ export function DogCardDetailed() {
   }
 
   return (
-    <Box className="flex flex-col justify-center m-5">
+    <Box className="flex flex-col items-center justify-center min-h-screen">
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
@@ -121,15 +123,19 @@ export function DogCardDetailed() {
         </Collapse>
       </Card>
 
-      {!dogData.dog.dogAdopted && (
-        <Link to={`/request-dog/${dogData.dog.id.toString()}`}>
-          <Button variant="contained">Request Adoption</Button>
-        </Link>
-      )}
+      <div className="flex flex-col items-center space-y-2 m-8">
+        {!dogData.dog.dogAdopted && (
+          <Link to={`/request-dog/${dogData.dog.id.toString()}`}>
+            <Button variant="contained">Request Adoption</Button>
+          </Link>
+        )}
 
-      <Link to={`/update-dog/${dogData.dog.id.toString()}`}>
-        <Button variant="contained">Update Dog Details</Button>
-      </Link>
+        {auth.currentUser?.isAdmin && (
+          <Link to={`/update-dog/${dogData.dog.id.toString()}`}>
+            <Button variant="contained">Update Dog Details</Button>
+          </Link>
+        )}
+      </div>
     </Box>
   );
 }

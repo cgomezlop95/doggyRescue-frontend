@@ -7,7 +7,7 @@ export function RequireAdmin() {
 
   if (!auth.currentUser || !auth.currentUser.isAdmin) {
     console.log("You are not an admin");
-    return <Navigate to="/dogs/pending" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   }
 
   console.log(auth.currentUser.isAdmin);

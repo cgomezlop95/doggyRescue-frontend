@@ -12,6 +12,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
 import { useNavigate, useParams } from "react-router-dom";
+import { queryClient } from "../main";
 
 export function UpdateDogForm() {
   const { id } = useParams();
@@ -42,6 +43,7 @@ export function UpdateDogForm() {
       error: errors.dogName,
       isRequired: true,
       defaultValue: dogData?.dog.dogName,
+      patternValue: ".*",
     },
     {
       id: "2",
@@ -51,6 +53,7 @@ export function UpdateDogForm() {
       error: errors.dogAge,
       isRequired: true,
       defaultValue: dogData?.dog.dogAge,
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "3",
@@ -60,6 +63,7 @@ export function UpdateDogForm() {
       error: errors.dogWeight,
       isRequired: true,
       defaultValue: dogData?.dog.dogWeight,
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "4",
@@ -69,6 +73,7 @@ export function UpdateDogForm() {
       error: errors.dogBreed,
       isRequired: true,
       defaultValue: dogData?.dog.dogBreed,
+      patternValue: ".*",
     },
     {
       id: "5",
@@ -78,6 +83,7 @@ export function UpdateDogForm() {
       error: errors.dogDescription,
       isRequired: false,
       defaultValue: dogData?.dog.dogDescription,
+      patternValue: ".*",
     },
     {
       id: "6",
@@ -87,6 +93,7 @@ export function UpdateDogForm() {
       error: errors.longitude,
       isRequired: false,
       defaultValue: dogData?.dog.longitude,
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
     {
       id: "7",
@@ -96,6 +103,7 @@ export function UpdateDogForm() {
       error: errors.latitude,
       isRequired: false,
       defaultValue: dogData?.dog.latitude,
+      patternValue: "^(1[0-9]|20|[1-9])$",
     },
   ];
 
@@ -152,9 +160,9 @@ export function UpdateDogForm() {
     mutationKey: ["updateDog", id],
     mutationFn: (data) => updateDog(id, data),
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["dogs"] });
+      queryClient.invalidateQueries({ queryKey: ["dog"] });
       console.log("dog succesffully modified");
-      navigate("/dogs/pending");
+      navigate("/");
     },
   });
 
@@ -208,6 +216,7 @@ export function UpdateDogForm() {
               error={el.error}
               isRequired={el.isRequired}
               defaultValue={el.defaultValue}
+              patternValue={el.patternValue}
             />
           );
         })}

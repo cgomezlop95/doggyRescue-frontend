@@ -43,7 +43,13 @@ export const Profile = () => {
         {Object.entries(auth.currentUser)
           .filter(
             ([key]) =>
-              !["password", "id", "updatedAt", "userPhotoURL", "isAdmin"].includes(key)
+              ![
+                "password",
+                "id",
+                "updatedAt",
+                "userPhotoURL",
+                "isAdmin",
+              ].includes(key)
           )
           .map(([key, value]) => (
             <Input
@@ -63,9 +69,12 @@ export const Profile = () => {
             Update Profile
           </Button>
         </Link>
-        <Button color="danger" variant="bordered">
-          View Adoption Requests
-        </Button>
+
+        <Link to="/my-adoption-requests">
+          <Button color="danger" variant="bordered">
+            View My Adoption Requests
+          </Button>
+        </Link>
       </div>
     </>
   );

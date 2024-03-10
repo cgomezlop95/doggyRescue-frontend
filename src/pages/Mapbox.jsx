@@ -3,6 +3,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useQuery } from "@tanstack/react-query";
 import { getPendingDogs } from "../service/dog";
+import { Chip, Textarea } from "@nextui-org/react";
+import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiaXZhbmVzdGViYW4iLCJhIjoiY2xvOXFiYXdnMGo0NDJqcXByMWp5eGt2NCJ9.M4IK9Cm2MPbyj26ZXeukug";
@@ -14,6 +16,19 @@ export function Mapbox() {
   });
 
   const [selectedDog, setSelectedDog] = useState(null);
+
+  let tabs = [
+    {
+      id: "1",
+      label: "Characteristics",
+      content: selectedDog?.dogAge,
+    },
+    {
+      id: "2",
+      label: "Description",
+      content: selectedDog?.dogDescription,
+    },
+  ];
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -70,19 +85,32 @@ export function Mapbox() {
   return (
     <div style={{ display: "flex", height: "800px" }}>
       <div
-        id="sidebar"
-        style={{
-          width: "300px",
-          backgroundColor: "#f8f9fa",
-          padding: "20px",
-          overflowY: "auto",
-        }}
+        className="flex flex-col items-center p-5 bg-gray-100 overflow-y-auto"
+        style={{ width: "300px" }}
       >
-        <h2>Sidebar Title</h2>
+        {/* <h2 className="text-xl font-semibold mb-4">Sidebar Title</h2> */}
         {selectedDog ? (
           <>
-            <p>{selectedDog.dogName}</p>
-            {/* Render other dog details here */}
+            <Chip color="primary" size="lg" className="mb-4">
+              {selectedDog.dogName}
+            </Chip>
+            <img
+              src={selectedDog.dogPhotoURL}
+              alt={selectedDog.dogName}
+              className="max-w-full h-auto mb-4 rounded-lg shadow"
+            />
+            <div className="flex w-full flex-col">
+              <Tabs aria-label="Dynamic tabs" items={tabs}>
+                {(item) => (
+                  <Tab key={item.id} title={item.label}>
+                    <Card>
+                      <CardBody>{item.content}</CardBody>
+                    </Card>
+                  </Tab>
+                )}
+              </Tabs>
+            </div>
+            {/* Additional dog details */}
           </>
         ) : (
           <p>Select a dog to see details</p>

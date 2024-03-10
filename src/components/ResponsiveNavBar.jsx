@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -14,8 +14,9 @@ import {
 
 import { Outlet, useNavigate } from "react-router-dom";
 import { clearCookie } from "../service/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../main";
+import { getNavbar } from "../service/navbar";
 
 //Different nav bar items will appear depending if the user is admin or not
 import { useAuth } from "../hooks/useAuth";
@@ -23,6 +24,8 @@ import { useAuth } from "../hooks/useAuth";
 export function ResponsiveNavBar() {
   let auth = useAuth();
   const navigate = useNavigate(); //For redirecting upon success
+  // const [forceUpdate, setForceUpdate] = useState(false);
+  // console.log("forceUpdate", forceUpdate);
 
   const { mutate, isLoading } = useMutation({
     mutationKey: "logout",
@@ -31,6 +34,7 @@ export function ResponsiveNavBar() {
       queryClient.invalidateQueries({
         queryKey: ["currentUser"],
       });
+      // setForceUpdate(true); //???
       console.log("Cookie has been cleared");
       navigate("/login");
     },
@@ -39,7 +43,7 @@ export function ResponsiveNavBar() {
     },
   });
 
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     {
@@ -97,6 +101,11 @@ export function ResponsiveNavBar() {
   }
 
   console.log("auth current user", auth.currentUser);
+
+  // useEffect(() => {
+  //   // This will toggle whenever auth.currentUser changes, forcing a re-render
+  //   setForceUpdate(f => !f);
+  // }, [auth.currentUser]);
 
   return (
     <>
