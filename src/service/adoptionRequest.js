@@ -85,6 +85,13 @@ const getMyRequests = async (userId) => {
   return data;
 };
 
+const getMyRequest = async (userId) => {
+  const { data } = await api.get("/my-adoption-requests", {
+    params: { userId: userId }, // Adjust the query param key according to your backend's expectations
+  });
+  return data;
+};
+
 export {
   postRequest,
   getAllRequests,
@@ -92,4 +99,5 @@ export {
   approveRequest,
   denyRequest,
   getMyRequests,
+  getMyRequest
 };

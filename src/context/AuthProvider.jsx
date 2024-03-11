@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const { data, isLoading } = useQuery({
     queryKey: ["currentUser"],
     queryFn: isUserLoggedIn,
-    retry: 1, //or false
+    retry: 1, //or false or 1
   });
 
   if (isLoading) {

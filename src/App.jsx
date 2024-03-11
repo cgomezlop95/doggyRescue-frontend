@@ -18,8 +18,9 @@ import { Profile } from "./pages/Profile";
 import { AdoptedDogList } from "./pages/AdoptedDogList";
 import { RequestDetailed } from "./pages/RequestDetailed";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
-import { UpdateUserForm} from "./pages/UpdateUserForm";
+import { UpdateUserForm } from "./pages/UpdateUserForm";
 import { MyAdoptionRequests } from "./pages/MyAdoptionRequests";
+import { MySingleAdoptionRequest } from "./pages/MySingleAdoptionRequest";
 
 export function App() {
   return (
@@ -38,7 +39,14 @@ export function App() {
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/update" element={<UpdateUserForm />} />
-          <Route path="/my-adoption-requests" element={<MyAdoptionRequests />}></Route>
+          <Route
+            path="/my-adoption-requests"
+            element={<MyAdoptionRequests />}
+          ></Route>
+          <Route
+            path="/my-adoption-request/:id"
+            element={<MySingleAdoptionRequest />}
+          ></Route>
           <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         </Route>
 

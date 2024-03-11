@@ -9,32 +9,24 @@ import {
   NavbarMenuItem,
   Link,
   Button,
-  menu,
+  ButtonGroup,
 } from "@nextui-org/react";
-
 import { Outlet, useNavigate } from "react-router-dom";
 import { clearCookie } from "../service/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../main";
-import { getNavbar } from "../service/navbar";
-
-//Different nav bar items will appear depending if the user is admin or not
 import { useAuth } from "../hooks/useAuth";
+import { DoggyRescueLogo} from "../components/DoggyRescueLogo";
 
 export function ResponsiveNavBar() {
   let auth = useAuth();
-  const navigate = useNavigate(); //For redirecting upon success
-  // const [forceUpdate, setForceUpdate] = useState(false);
-  // console.log("forceUpdate", forceUpdate);
+  const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation({
     mutationKey: "logout",
     mutationFn: clearCookie,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["currentUser"],
-      });
-      // setForceUpdate(true); //???
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       console.log("Cookie has been cleared");
       navigate("/login");
     },
@@ -102,11 +94,6 @@ export function ResponsiveNavBar() {
 
   console.log("auth current user", auth.currentUser);
 
-  // useEffect(() => {
-  //   // This will toggle whenever auth.currentUser changes, forcing a re-render
-  //   setForceUpdate(f => !f);
-  // }, [auth.currentUser]);
-
   return (
     <>
       <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -116,6 +103,7 @@ export function ResponsiveNavBar() {
             className="sm:hidden"
           />
           <NavbarBrand>
+            <DoggyRescueLogo />
             <p className="font-bold text-inherit">DOGGY RESCUE</p>
           </NavbarBrand>
         </NavbarContent>
@@ -130,43 +118,34 @@ export function ResponsiveNavBar() {
               </NavbarItem>
             );
           })}
-          {/* <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href="#" aria-current="page">
-              Customers
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem> */}
         </NavbarContent>
 
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Link href="/login">Login</Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Button as={Link} color="primary" href="/signup" variant="flat">
-              Sign Up
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button
-              as={Link}
-              color="primary"
-              variant="flat"
-              onClick={mutate}
-              disabled={isLoading}
-            >
-              Logout
-            </Button>
-          </NavbarItem>
+          {!auth.currentUser && (
+            <NavbarItem>
+              <ButtonGroup>
+                <Button as={Link} color="primary" href="/signup" variant="flat">
+                  Sign Up
+                </Button>
+                <Button as={Link} color="primary" href="/login" variant="flat">
+                  Login
+                </Button>
+              </ButtonGroup>
+            </NavbarItem>
+          )}
+          {auth.currentUser && (
+            <NavbarItem>
+              <Button
+                as={Link}
+                color="primary"
+                variant="flat"
+                onClick={mutate}
+                disabled={isLoading}
+              >
+                Logout
+              </Button>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
         <NavbarMenu>

@@ -85,7 +85,6 @@ export function SignUp() {
     mutationKey: "signup",
     mutationFn: postRegister,
     onSuccess: () => {
-      // console.log("ENTRA");
       navigate("/login");
     },
   });
