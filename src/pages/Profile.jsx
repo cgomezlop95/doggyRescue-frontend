@@ -51,16 +51,22 @@ export const Profile = () => {
                 "isAdmin",
               ].includes(key)
           )
-          .map(([key, value]) => (
-            <Input
-              key={key} // Use the object key as the React key for each input
-              label={key.charAt(0).toUpperCase() + key.slice(1)} // Capitalize the first letter of the label
-              value={value}
-              color="default"
-              variant="bordered"
-              className="w-full"
-            />
-          ))}
+          .map(([key, value]) => {
+            let label =
+              key.charAt(0).toUpperCase() +
+              key.slice(1).replace(/([A-Z])/g, " $1");
+            label = label.charAt(0).toUpperCase() + label.slice(1).trim();
+            return (
+              <Input
+                key={key}
+                label={label}
+                value={value}
+                color="default"
+                variant="bordered"
+                className="w-full"
+              />
+            );
+          })}
       </div>
 
       <div className="flex justify-center items-center py-4 gap-4">
