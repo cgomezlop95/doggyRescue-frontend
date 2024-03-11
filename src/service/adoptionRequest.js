@@ -41,21 +41,6 @@ const postRequest = async (
   }
 };
 
-// const getPendingRequests = async () => {
-//   const { data } = await api.get("/adoption-requests/pending");
-//   return data;
-// };
-
-// const getApprovedRequests = async () => {
-//   const { data } = await api.get("/adoption-requests/approved");
-//   return data;
-// };
-
-// const getRejectedRequests = async () => {
-//   const { data } = await api.get("/adoption-requests/rejected");
-//   return data;
-// };
-
 const getAllRequests = async () => {
   const { data } = await api.get("/adoption-requests");
   return data;
@@ -80,14 +65,14 @@ const denyRequest = async (id) => {
 
 const getMyRequests = async (userId) => {
   const { data } = await api.get("/my-adoption-requests", {
-    params: { userId: userId }, // Adjust the query param key according to your backend's expectations
+    params: { userId: userId },
   });
   return data;
 };
 
 const getMyRequest = async (userId) => {
   const { data } = await api.get("/my-adoption-requests", {
-    params: { userId: userId }, // Adjust the query param key according to your backend's expectations
+    params: { userId: userId },
   });
   return data;
 };
@@ -99,5 +84,5 @@ export {
   approveRequest,
   denyRequest,
   getMyRequests,
-  getMyRequest
+  getMyRequest,
 };

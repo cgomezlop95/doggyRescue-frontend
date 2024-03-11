@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../service/user";
 import { useAuth } from "../hooks/useAuth";
 import { queryClient } from "../main";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export function UpdateUserForm() {
   const navigate = useNavigate();
@@ -120,7 +121,7 @@ export function UpdateUserForm() {
   };
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (

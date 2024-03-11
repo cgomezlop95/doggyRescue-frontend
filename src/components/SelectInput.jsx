@@ -6,12 +6,19 @@ const genders = [
   { label: "Female", value: "female", description: "female gender" },
 ];
 
-export function SelectInput({ control, name, label, isRequired, error }) {
+export function SelectInput({
+  control,
+  name,
+  label,
+  isRequired,
+  error,
+  defaultValue,
+}) {
   return (
     <Controller
       name={name}
       control={control}
-      // defaultValue={defaultValue}
+      defaultValue={defaultValue}
       rules={{
         required: {
           value: isRequired,
@@ -24,7 +31,7 @@ export function SelectInput({ control, name, label, isRequired, error }) {
             label={label}
             value={value}
             variant="bordered"
-            // placeholder={defaultValue}
+            placeholder={defaultValue}
             className="max-w-xs"
             onChange={onChange}
             isInvalid={!!error}

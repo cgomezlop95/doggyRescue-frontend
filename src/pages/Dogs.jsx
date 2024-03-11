@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPendingDogs } from "../service/dog";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export function Dogs() {
   const { data: dogData, isLoading } = useQuery({
@@ -8,7 +9,7 @@ export function Dogs() {
   });
 
   if (isLoading) {
-    return <h1>Loading dogs</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (

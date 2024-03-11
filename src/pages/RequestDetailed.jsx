@@ -3,6 +3,7 @@ import { getRequestById } from "../service/adoptionRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Box, Button } from "@mui/material";
 import { approveRequest, denyRequest } from "../service/adoptionRequest";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export const RequestDetailed = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ export const RequestDetailed = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (

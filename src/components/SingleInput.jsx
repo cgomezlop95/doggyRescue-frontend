@@ -18,14 +18,13 @@ export function SingleInput({
 }) {
   const [isVisible, setIsVisible] = useState(false); //For passwords
   const toggleVisibility = () => setIsVisible(!isVisible); //For passwords
-  // console.log(patternValue);
-  // console.log(name);
+
   return (
     <Controller
       name={name}
       control={control}
       defaultValue={defaultValue ? defaultValue : ""} //This solved my warning "A component changed from uncontrolled to controlled"
-      //If defaultValue is null or undefined, an empty string is used as the default value.
+  
       rules={{
         required: {
           value: isRequired,

@@ -41,23 +41,18 @@ export function Mapbox() {
     const dogsWithCoordinates = dogData?.dogs.filter(
       (dog) => dog.latitude && dog.longitude
     );
-    // console.log("dogsWithCoordinates", dogsWithCoordinates);
 
     dogsWithCoordinates?.forEach((dog) => {
-      // console.log("coordinates", dog.longitude, dog.latitude);
-      // console.log(typeof dog.latitude);
-      // console.log(typeof dog.longitude);
-      // console.log(dog.dogPhotoURL)
       const dogCoordinates = [dog.longitude, dog.latitude];
       //Custom marker with dog icon//
       const el = document.createElement("div");
       el.className = "marker";
       el.style.backgroundImage = `url(${dog.dogPhotoURL})`;
       el.style.backgroundRepeat = "no-repeat";
-      el.style.width = "75px";
-      el.style.height = "75px";
+      el.style.width = "60px";
+      el.style.height = "60px";
       el.style.backgroundSize = "100%";
-      //Custom marker//
+      el.style.borderRadius = "50%";
 
       const popup = new mapboxgl.Popup().setHTML(
         `<div>

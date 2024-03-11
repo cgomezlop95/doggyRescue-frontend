@@ -39,10 +39,7 @@ export function Login() {
     },
   ];
 
-  const {
-    mutate: loginMutate,
-    isLoading,
-  } = useMutation({
+  const { mutate: loginMutate, isLoading } = useMutation({
     mutationKey: "login",
     mutationFn: postLogin,
     onSuccess: () => {

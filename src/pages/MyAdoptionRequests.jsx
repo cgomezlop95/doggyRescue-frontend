@@ -20,6 +20,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { EyeIcon } from "../components/EyeIcon";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 const statusColorMap = {
   true: "success",
@@ -118,7 +119,7 @@ export const MyAdoptionRequests = () => {
   }, []);
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <CircularIndeterminate />;
   }
 
   console.log(myRequestData);

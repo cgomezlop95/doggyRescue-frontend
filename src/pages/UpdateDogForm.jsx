@@ -13,6 +13,7 @@ import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
 import { useNavigate, useParams } from "react-router-dom";
 import { queryClient } from "../main";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export function UpdateDogForm() {
   const { id } = useParams();
@@ -30,7 +31,6 @@ export function UpdateDogForm() {
     handleSubmit,
     reset,
     resetField,
-    register,
     formState: { errors },
   } = useForm();
 
@@ -49,21 +49,21 @@ export function UpdateDogForm() {
       id: "2",
       name: "dogAge",
       label: "Age",
-      type: "number",
+      type: "string",
       error: errors.dogAge,
       isRequired: true,
       defaultValue: dogData?.dog.dogAge,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
     {
       id: "3",
       name: "dogWeight",
       label: "Weight",
-      type: "number",
+      type: "string",
       error: errors.dogWeight,
       isRequired: true,
       defaultValue: dogData?.dog.dogWeight,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
     {
       id: "4",
@@ -89,21 +89,21 @@ export function UpdateDogForm() {
       id: "6",
       name: "longitude",
       label: "Longitude",
-      type: "number",
+      type: "string",
       error: errors.longitude,
       isRequired: false,
       defaultValue: dogData?.dog.longitude,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
     {
       id: "7",
       name: "latitude",
       label: "Latitude",
-      type: "number",
+      type: "string",
       error: errors.latitude,
       isRequired: false,
       defaultValue: dogData?.dog.latitude,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
   ];
 
@@ -161,7 +161,6 @@ export function UpdateDogForm() {
     mutationFn: (data) => updateDog(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dog"] });
-      console.log("dog succesffully modified");
       navigate("/");
     },
   });
@@ -186,7 +185,7 @@ export function UpdateDogForm() {
   };
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (
@@ -195,7 +194,6 @@ export function UpdateDogForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center items-center mt-20 gap-3"
-        // className="max-w-xs"
       >
         <SelectInput
           control={control}

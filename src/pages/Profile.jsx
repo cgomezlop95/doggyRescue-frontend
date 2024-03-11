@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button, Chip, Input } from "@nextui-org/react";
 import { UserIcon } from "../components/UserIcon";
 import { Link } from "react-router-dom";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export const Profile = () => {
   let auth = useAuth();
@@ -15,7 +16,7 @@ export const Profile = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <CircularIndeterminate />;
   }
 
   // console.log("myRequestData", myRequestData);

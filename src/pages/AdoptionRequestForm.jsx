@@ -8,6 +8,7 @@ import { SingleInput } from "../components/SingleInput";
 import { Button } from "@nextui-org/react";
 import { Alert, Box } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export function AdoptionRequestForm() {
   const { id } = useParams();
@@ -133,12 +134,12 @@ export function AdoptionRequestForm() {
   console.log("id", id);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (
     <>
-      <h1 className="text-center my-5">
+      <h1 className="text-center my-5 text-3xl font-semibold text-gray-800">
         Adoption Request Form for {dogData.dog.dogName}
       </h1>
 

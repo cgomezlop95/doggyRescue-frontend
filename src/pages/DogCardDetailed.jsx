@@ -19,8 +19,9 @@ import Button from "@mui/material/Button";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getDogById } from "../service/dog";
 import { useQuery } from "@tanstack/react-query";
-import { Box } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -44,14 +45,14 @@ export function DogCardDetailed() {
 
   console.log(dogData);
 
-  const [expanded, setExpanded] = React.useState(false);
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (
@@ -63,14 +64,16 @@ export function DogCardDetailed() {
               {dogData?.dog.dogName[0]}
             </Avatar>
           }
-          //   action={
-          //     <IconButton aria-label="settings">
-          //       <MoreVertIcon />
-          //     </IconButton>
-          //   }
-          title={dogData.dog.dogName}
-          subheader={dogData.dog.dogBreed}
+          title={
+            <h3 className="text-xl font-semibold text-gray-900">
+              {dogData.dog.dogName}
+            </h3>
+          }
+          subheader={
+            <p className="text-sm text-gray-600">{dogData.dog.dogBreed}</p>
+          }
         />
+
         <CardMedia
           component="img"
           height="194"
@@ -79,48 +82,46 @@ export function DogCardDetailed() {
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {dogData.dog.description}
+            {dogData.dog.dogDescription}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
 
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <ul>
-              <li>Age: {dogData.dog.dogAge} years</li>
-              <li>Gender: {dogData.dog.dogSex}</li>
-              <li>Weight: {dogData.dog.dogWeight}</li>
-              <li>
-                Suitable For Kids:{dogData.dog.suitableForKids ? "Yes" : "No"}
-              </li>
-              <li>
-                Suitable For Other Pets:{" "}
-                {dogData.dog.suitableForOtherPets ? "Yes" : "No"}
-              </li>
-              <li>
-                Potentially Dangerous:{" "}
-                {dogData.dog.potentiallyDangerousDog ? "Yes" : "No"}
-              </li>
-              <li>Is Vaccinated: {dogData.dog.isVaccinated ? "Yes" : "No"}</li>
-              <li>Is Sterilized: {dogData.dog.isSterilized ? "Yes" : "No"}</li>
-            </ul>
-          </CardContent>
-        </Collapse>
+        <CardContent>
+          <ul className="list-disc pl-5 space-y-2">
+            <li className="text-gray-800">
+              <span className="font-semibold">Age:</span> {dogData.dog.dogAge}{" "}
+              years
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Gender:</span>{" "}
+              {dogData.dog.dogSex}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Weight:</span>{" "}
+              {dogData.dog.dogWeight}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Suitable For Kids:</span>{" "}
+              {dogData.dog.suitableForKids ? "Yes" : "No"}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Suitable For Other Pets:</span>{" "}
+              {dogData.dog.suitableForOtherPets ? "Yes" : "No"}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Potentially Dangerous:</span>{" "}
+              {dogData.dog.potentiallyDangerousDog ? "Yes" : "No"}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Is Vaccinated:</span>{" "}
+              {dogData.dog.isVaccinated ? "Yes" : "No"}
+            </li>
+            <li className="text-gray-800">
+              <span className="font-semibold">Is Sterilized:</span>{" "}
+              {dogData.dog.isSterilized ? "Yes" : "No"}
+            </li>
+          </ul>
+        </CardContent>
       </Card>
 
       <div className="flex flex-col items-center space-y-2 m-8">

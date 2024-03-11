@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
+import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 export function AdoptedDogList() {
   const { data: dogData, isLoading } = useQuery({
@@ -12,7 +13,7 @@ export function AdoptedDogList() {
   });
 
   if (isLoading) {
-    return <h1>Loading dogs</h1>;
+    return <CircularIndeterminate />;
   }
 
   return (

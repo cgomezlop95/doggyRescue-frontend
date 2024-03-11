@@ -1,12 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import { Homepage } from "./pages/Homepage";
-import { NavBar } from "./components/NavBar";
 import { ResponsiveNavBar } from "./components/ResponsiveNavBar";
 import { SignUp } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { RequireAuth } from "./components/ProtectedRoute";
 import { RequireAdmin } from "./components/AdminProtectedRoute";
-import { Dogs } from "./pages/Dogs";
 import { DogForm } from "./pages/DogForm";
 import { DogList } from "./pages/DogList";
 import { DogCardDetailed } from "./pages/DogCardDetailed";
@@ -35,7 +32,6 @@ export function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route element={<RequireAuth />}>
-          {/* <Route path="/" element={<Homepage />} /> */}
           <Route path="/request-dog/:id" element={<AdoptionRequestForm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/update" element={<UpdateUserForm />} />

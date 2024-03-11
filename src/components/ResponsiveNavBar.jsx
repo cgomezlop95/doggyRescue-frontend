@@ -29,6 +29,7 @@ export function ResponsiveNavBar() {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       console.log("Cookie has been cleared");
       navigate("/login");
+      window.location.reload(); // Reload the page (to refresh navbar)
     },
     onError: (error) => {
       console.error("Error deleting the cookie", error);
