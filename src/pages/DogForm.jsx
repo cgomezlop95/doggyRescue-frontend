@@ -38,19 +38,19 @@ export function DogForm() {
       id: "2",
       name: "dogAge",
       label: "Age",
-      type: "number",
+      type: "string",
       error: errors.dogAge,
       isRequired: true,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
     {
       id: "3",
       name: "dogWeight",
       label: "Weight",
-      type: "number",
+      type: "string",
       error: errors.dogWeight,
       isRequired: true,
-      patternValue: "^(1[0-9]|20|[1-9])$",
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
     {
       id: "4",
@@ -74,19 +74,19 @@ export function DogForm() {
       id: "6",
       name: "longitude",
       label: "Longitude",
-      type: "number",
+      type: "string",
       error: errors.longitude,
       isRequired: false,
-      patternValue: "^(1[0-9]|20|[1-9])$", //Positive or negative numbers
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$", //Positive or negative decimal numbers
     },
     {
       id: "7",
       name: "latitude",
       label: "Latitude",
-      type: "number",
+      type: "string",
       error: errors.latitude,
       isRequired: false,
-      patternValue: "^(1[0-9]|20|[1-9])$", //Positive or negative numbers
+      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
     },
   ];
 
