@@ -5,9 +5,12 @@ import { postLogin } from "../service/auth";
 import { queryClient } from "../main";
 import { SingleInput } from "../components/SingleInput";
 import { Button } from "@nextui-org/react";
+import { useState } from "react";
+import { Alert } from "@mui/material";
 
 export function Login() {
-  const navigate = useNavigate(); //For redirecting upon success
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     control,
     resetField,
@@ -36,20 +39,26 @@ export function Login() {
     },
   ];
 
-  const { mutate: loginMutate, isLoading } = useMutation({
+  const {
+    mutate: loginMutate,
+    isLoading,
+    isSuccess,
+  } = useMutation({
     mutationKey: "login",
     mutationFn: postLogin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      navigate("/"); //Redirect to homepage
+      navigate("/profile");
     },
     onError: (error) => {
-      console.error("Error al loguear el usuario:", error);
+      console.error("Login error:", error);
+      setErrorMessage("Invalid login credentials");
     },
   });
 
   const onSubmit = (data) => {
     loginMutate(data);
+    setErrorMessage("");
   };
 
   return (
@@ -77,6 +86,12 @@ export function Login() {
         <Button color="primary" type="submit" disabled={isLoading}>
           Submit
         </Button>
+
+        {errorMessage && (
+          <Alert variant="filled" severity="error">
+            {errorMessage}
+          </Alert>
+        )}
       </form>
     </div>
   );

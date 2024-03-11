@@ -11,10 +11,10 @@ import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export function SignUp() {
-  const navigate = useNavigate(); //For redirecting upon success
+  const navigate = useNavigate();
   const [isSelected, setIsSelected] = useState(false); //For privacy policy
   const [privacyPolicyError, setPrivacyPolicyError] = useState("");
-  //The last sentece is for the error message if the user did not sign the privacy policy
+  //The last sentence is for the error message if the user did not sign the privacy policy
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
 
