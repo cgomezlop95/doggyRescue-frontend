@@ -21,12 +21,12 @@ export function Mapbox() {
     {
       id: "1",
       label: "Characteristics",
-      content: selectedDog?.dogAge,
+      content: [`${selectedDog?.dogAge} years`, selectedDog?.dogSex],
     },
     {
       id: "2",
       label: "Description",
-      content: selectedDog?.dogDescription,
+      content: [selectedDog?.dogDescription],
     },
   ];
 
@@ -99,7 +99,11 @@ export function Mapbox() {
                 {(item) => (
                   <Tab key={item.id} title={item.label}>
                     <Card>
-                      <CardBody>{item.content}</CardBody>
+                      <CardBody>
+                        {item.content.map((el) => (
+                          <p>{el}</p>
+                        ))}
+                      </CardBody>
                     </Card>
                   </Tab>
                 )}
