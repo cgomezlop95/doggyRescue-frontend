@@ -8,11 +8,22 @@ import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
 //for the header
 import { Card, CardHeader, CardBody, Divider, Image } from "@nextui-org/react";
+import { useState } from "react";
 
 export function DogList() {
   const { data: dogData, isLoading } = useQuery({
     queryKey: ["dogs"],
     queryFn: getPendingDogs,
+  });
+
+  const [selectedSex, setSelectedSex] = useState("all"); //Filter by gender
+  const handleSexChange = (event) => {
+    setSelectedSex(event.target.value);
+  };
+
+  // Filter dogs based on the selected sex
+  const filteredDogs = dogData?.dogs.filter((dog) => {
+    return selectedSex === "all" || dog.dogSex === selectedSex;
   });
 
   if (isLoading) {
@@ -38,9 +49,19 @@ export function DogList() {
         <Divider />
       </Card>
 
-      <div>
-        <label for="dogSex">Filter by Dog Sex</label>
-        <select id="dogSex" name="dogSex">
+      <div className="my-8 mx-auto max-w-lg p-4 bg-white shadow-md rounded-lg">
+        <label
+          htmlFor="dogSex"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Filter by Dog Sex
+        </label>
+        <select
+          id="dogSex"
+          name="dogSex"
+          onChange={handleSexChange}
+          className="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
           <option value="all">All</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -54,7 +75,7 @@ export function DogList() {
         // variant="woven"
         gap={20}
       >
-        {dogData?.dogs.map((item) => (
+        {filteredDogs.map((item) => (
           <Link key={item.id} to={`/dog/${item.id.toString()}`}>
             <ImageListItem>
               <div

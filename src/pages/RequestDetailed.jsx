@@ -3,7 +3,7 @@ import { getRequestById } from "../service/adoptionRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { approveRequest, denyRequest } from "../service/adoptionRequest";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, User } from "@nextui-org/react";
 
 export const RequestDetailed = () => {
   const { id } = useParams();
@@ -14,7 +14,8 @@ export const RequestDetailed = () => {
     queryFn: () => getRequestById(id),
   });
 
-  console.log(requestData);
+  console.log("request data", requestData);
+  console.log("dog", requestData?.adoptionRequest.dog);
 
   const { mutate: approveRequestMutation, isSuccess: approveSuccess } =
     useMutation({
@@ -44,28 +45,29 @@ export const RequestDetailed = () => {
   return (
     <>
       <div className="flex items-center justify-center pt-8 pb-4 space-x-4">
-        {requestData.adoptionRequest.user.userPhotoURL && (
-          <img
-            src={requestData.adoptionRequest.user.userPhotoURL}
-            alt="User"
-            className="max-h-[25vh] object-contain"
-          />
-        )}
-        <span className="font-bold text-lg">
-          {requestData.adoptionRequest.user.firstName}{" "}
-          {requestData.adoptionRequest.user.lastName}
-          {" would like to adopt"}
-        </span>
+        <User
+          name={requestData.adoptionRequest.user.firstName}
+          description={
+            <Link href="https://twitter.com/jrgarciadev" size="sm" isExternal>
+              {requestData.adoptionRequest.user.email}
+            </Link>
+          }
+          avatarProps={{
+            src: requestData.adoptionRequest.user.userPhotoURL,
+          }}
+        />
+
         {requestData.adoptionRequest.dog.dogPhotoURL && (
           <img
             src={requestData.adoptionRequest.dog.dogPhotoURL}
             alt="Dog"
-            className="max-h-[25vh] object-contain"
+            className="max-h-[25vh] object-contain rounded-md"
           />
         )}
       </div>
 
       <div className="grid grid-cols-4 gap-4 max-w-4xl mx-auto pb-8">
+        <h3>Request details</h3>
         {Object.entries(requestData.adoptionRequest)
           .filter(
             ([key]) =>
@@ -95,6 +97,29 @@ export const RequestDetailed = () => {
                 key={key}
                 label={label}
                 value={displayValue}
+                color="default"
+                variant="bordered"
+                className="w-full"
+              />
+            );
+          })}
+      </div>
+
+      <div className="grid grid-cols-4 gap-4 max-w-4xl mx-auto pb-8">
+        <h3>Dog details</h3>
+        {Object.entries(requestData.adoptionRequest.dog)
+          .filter(([key]) => !["dogPhotoURL"].includes(key))
+          .map(([key, value]) => {
+            let label =
+              key.charAt(0).toUpperCase() +
+              key.slice(1).replace(/([A-Z])/g, " $1");
+            label = label.charAt(0).toUpperCase() + label.slice(1).trim();
+
+            return (
+              <Input
+                key={key}
+                label={label}
+                value={value}
                 color="default"
                 variant="bordered"
                 className="w-full"
