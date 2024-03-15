@@ -20,14 +20,11 @@ export function UpdateUserForm() {
   const navigate = useNavigate();
   let auth = useAuth();
   const userId = auth.currentUser.id;
-  console.log("userId", userId);
 
   const { data: userData, isLoading } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => getUserById(userId),
   });
-
-  console.log(userData);
 
   const {
     control,
@@ -87,7 +84,6 @@ export function UpdateUserForm() {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
     }
   };
 
@@ -96,7 +92,6 @@ export function UpdateUserForm() {
     mutationFn: (data) => updateUser(userId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      console.log("dog succesffully modified");
       navigate("/profile");
     },
   });
@@ -108,11 +103,8 @@ export function UpdateUserForm() {
         await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(storageRef);
         setUrl(downloadURL);
-        console.log("Archivo disponible en", downloadURL);
-        console.log({ ...data, userPhotoURL: downloadURL });
-        mutate({ ...data, userPhotoURL: downloadURL }); //await here ?
+        mutate({ ...data, userPhotoURL: downloadURL });
       } else {
-        console.log(data);
         mutate(data);
       }
     } catch (error) {

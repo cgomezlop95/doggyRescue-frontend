@@ -40,12 +40,9 @@ export function RequestAdminTable() {
     queryFn: getAllRequests,
   });
 
-  // console.log(requestData);
-
   const renderCell = React.useCallback((request, columnKey) => {
     const cellValue = request[columnKey];
     const requestId = request.userId + "_" + request.dogId;
-    console.log(requestId);
     switch (columnKey) {
       case "name":
         return (

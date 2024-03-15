@@ -38,18 +38,14 @@ const columns = [
 export const MyAdoptionRequests = () => {
   let auth = useAuth();
   const userId = auth.currentUser.id;
-  console.log("userId", userId);
   const { data: myRequestData, isLoading } = useQuery({
     queryKey: ["myRequests", userId],
     queryFn: () => getMyRequests(userId),
   });
 
-  console.log(myRequestData?.adoptionRequests);
-
   const renderCell = React.useCallback((request, columnKey) => {
     const cellValue = request[columnKey];
     const requestId = request.userId + "_" + request.dogId;
-    console.log(requestId);
     switch (columnKey) {
       case "name":
         return (
@@ -121,8 +117,6 @@ export const MyAdoptionRequests = () => {
   if (isLoading) {
     return <CircularIndeterminate />;
   }
-
-  console.log(myRequestData);
 
   return (
     <Table aria-label="Example table with custom cells">

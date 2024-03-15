@@ -16,7 +16,7 @@ import { clearCookie } from "../service/auth";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../main";
 import { useAuth } from "../hooks/useAuth";
-import { DoggyRescueLogo} from "../components/DoggyRescueLogo";
+import { DoggyRescueLogo } from "../components/DoggyRescueLogo";
 
 export function ResponsiveNavBar() {
   let auth = useAuth();
@@ -26,10 +26,8 @@ export function ResponsiveNavBar() {
     mutationKey: "logout",
     mutationFn: clearCookie,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      console.log("Cookie has been cleared");
+      queryClient.setQueryData(["currentUser"], null);
       navigate("/login");
-      window.location.reload(); // Reload the page (to refresh navbar)
     },
     onError: (error) => {
       console.error("Error deleting the cookie", error);
@@ -93,8 +91,6 @@ export function ResponsiveNavBar() {
     filteredArray = menuItems;
   }
 
-  console.log("auth current user", auth.currentUser);
-
   return (
     <>
       <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -105,7 +101,7 @@ export function ResponsiveNavBar() {
           />
           <NavbarBrand>
             <DoggyRescueLogo />
-            <p className="font-bold text-inherit">DOGGY RESCUE</p>
+            <p className="ml-2 font-bold text-inherit">DOGGY RESCUE</p>
           </NavbarBrand>
         </NavbarContent>
 

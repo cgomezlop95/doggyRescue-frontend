@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPendingDogs } from "../service/dog";
+import { getPendingDogs, getDogBreeds } from "../service/dog";
 import { Link } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
-
-//for the header
 import { Card, CardHeader, CardBody, Divider, Image } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -16,14 +14,27 @@ export function DogList() {
     queryFn: getPendingDogs,
   });
 
-  const [selectedSex, setSelectedSex] = useState("all"); //Filter by gender
+  const { data: dogBreedData } = useQuery({
+    queryKey: ["breeds"],
+    queryFn: getDogBreeds,
+  });
+
+  const [selectedSex, setSelectedSex] = useState("all");
+  const [selectedBreed, setSelectedBreed] = useState("all");
+
   const handleSexChange = (event) => {
     setSelectedSex(event.target.value);
   };
 
-  // Filter dogs based on the selected sex
+  const handleBreedChange = (event) => {
+    setSelectedBreed(event.target.value);
+  };
+
   const filteredDogs = dogData?.dogs.filter((dog) => {
-    return selectedSex === "all" || dog.dogSex === selectedSex;
+    return (
+      (selectedSex === "all" || dog.dogSex === selectedSex) &&
+      (selectedBreed === "all" || dog.dogBreed === selectedBreed)
+    );
   });
 
   if (isLoading) {
@@ -49,7 +60,7 @@ export function DogList() {
         <Divider />
       </Card>
 
-      <div className="my-8 mx-auto max-w-lg p-4 bg-white shadow-md rounded-lg">
+      <div className="flex flex-row my-8 mx-auto max-w-lg p-4 bg-white shadow-md rounded-lg">
         <label
           htmlFor="dogSex"
           className="block text-sm font-medium text-gray-700"
@@ -66,13 +77,30 @@ export function DogList() {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+
+        <label
+          htmlFor="dogBreed"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Filter by Dog Breed
+        </label>
+        <select
+          id="dogBreed"
+          name="dogBreed"
+          onChange={handleBreedChange}
+          className="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option value="all">All</option>
+          {dogBreedData?.dogBreeds.map((el) => (
+            <option value={el.dogBreed}>{el.dogBreed}</option>
+          ))}
+        </select>
       </div>
 
       <ImageList
         sx={{ width: 1300, margin: 5 }}
         cols={4}
-        rowHeight={300} //or "auto"
-        // variant="woven"
+        rowHeight={300}
         gap={20}
       >
         {filteredDogs.map((item) => (
@@ -81,24 +109,14 @@ export function DogList() {
               <div
                 style={{
                   backgroundImage: `url(${item.dogPhotoURL}`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center", //or center
-                  height: "300px" /* Adjust height as needed */,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  height: "300px",
                 }}
               ></div>
 
-              <ImageListItemBar
-                title={item.dogName}
-                subtitle={item.dogBreed}
-                // actionIcon={
-                //   <IconButton
-                //     sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                //     aria-label={`info about ${item.dogName}`}
-                //   >
-                //     <InfoIcon />
-                //   </IconButton>
-                // }
-              />
+              <ImageListItemBar title={item.dogName} subtitle={item.dogBreed} />
             </ImageListItem>
           </Link>
         ))}

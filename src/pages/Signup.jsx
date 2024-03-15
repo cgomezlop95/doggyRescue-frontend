@@ -77,7 +77,6 @@ export function SignUp() {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
     }
   };
 
@@ -89,10 +88,6 @@ export function SignUp() {
     },
   });
 
-  // const onSubmit = async (data) => {
-  //   signupMutation(data);
-  // };
-
   const onSubmit = async (data) => {
     if (!isSelected) {
       setPrivacyPolicyError("You must agree to the privacy policy to sign up.");
@@ -102,12 +97,10 @@ export function SignUp() {
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
       setUrl(downloadURL);
-      console.log("Archivo disponible en", downloadURL);
-      console.log({ ...data, userPhotoURL: downloadURL });
+      ("Archivo disponible en", downloadURL);
       setPrivacyPolicyError(""); // Clear any previous error message
       signupMutation({ ...data, userPhotoURL: downloadURL }); //await here ?
     } else {
-      console.log(data);
       setPrivacyPolicyError(""); // Clear any previous error message
       signupMutation(data);
     }
@@ -151,9 +144,7 @@ export function SignUp() {
             By signing up, you expressly agree to our{" "}
             <a href="/privacy-policy">Privacy Policy</a>
           </Checkbox>
-          {/* <p className="text-default-500">
-            Selected: {isSelected ? "true" : "false"}
-          </p> */}
+
           {privacyPolicyError && (
             <Alert variant="filled" severity="error">
               {privacyPolicyError}

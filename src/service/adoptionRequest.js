@@ -34,7 +34,6 @@ const postRequest = async (
       numberOfPeople,
       adopterDescription,
     });
-    console.log("final data", data);
     return data;
   } catch (error) {
     console.error("Error creating request: ", error);
@@ -53,13 +52,11 @@ const getRequestById = async (id) => {
 
 const approveRequest = async (id) => {
   const { data } = await api.put(`/adoption-request/approve/${id}`);
-  console.log("entra en approve");
   return data;
 };
 
 const denyRequest = async (id) => {
   const { data } = await api.put(`/adoption-request/deny/${id}`);
-  console.log("entra en deny");
   return data;
 };
 

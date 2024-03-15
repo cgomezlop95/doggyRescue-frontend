@@ -69,7 +69,6 @@ export function Mapbox() {
         .addTo(map);
 
       popup.on("open", () => setSelectedDog(dog));
-      console.log("selectedDog", selectedDog);
     });
 
     return () => map.remove();

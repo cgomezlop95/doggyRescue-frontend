@@ -9,8 +9,5 @@ export function RequireAuth() {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  console.log("currentuser", auth.currentUser.id);
-  console.log(auth.currentUser.isAdmin);
-  console.log("current user", auth.currentUser);
   return <Outlet />;
 }

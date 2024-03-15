@@ -118,20 +118,11 @@ export function AdoptionRequestForm() {
   const { mutate, isSuccess } = useMutation({
     mutationKey: ["createAdoptionRequest", id],
     mutationFn: (data) => postRequest(id, data),
-    // mutationFn: (data) => postRequest(id, data),
-    // mutationFn: (data) => console.log("mutation fn", data),
   });
 
   const onSubmit = (data) => {
-    // console.log(data);
-    // console.log("auth current user id", auth.currentUser.id);
-    // // mutate(data);
-    // console.log("ENTRA");
-    console.log("final data", { ...data, userId: auth.currentUser.id });
     mutate({ ...data, userId: auth.currentUser.id, dogId: dogData.dog.id });
   };
-
-  console.log("id", id);
 
   if (isLoading) {
     return <CircularIndeterminate />;
@@ -149,7 +140,7 @@ export function AdoptionRequestForm() {
           <img
             src={dogData.dog.dogPhotoURL}
             alt={`Photo of ${dogData.dog.dogName}`}
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
           />
         </div>
 

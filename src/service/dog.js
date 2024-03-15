@@ -90,4 +90,16 @@ const updateDog = async (
   return data;
 };
 
-export { getPendingDogs, getAdoptedDogs, getDogById, postDog, updateDog };
+const getDogBreeds = async () => {
+  const { data } = await api.get("/dogs/breeds");
+  return data;
+};
+
+export {
+  getPendingDogs,
+  getAdoptedDogs,
+  getDogById,
+  postDog,
+  updateDog,
+  getDogBreeds,
+};

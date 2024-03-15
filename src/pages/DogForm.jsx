@@ -41,7 +41,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogAge,
       isRequired: true,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "3",
@@ -50,7 +50,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogWeight,
       isRequired: true,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "4",
@@ -77,7 +77,7 @@ export function DogForm() {
       type: "string",
       error: errors.longitude,
       isRequired: false,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$", //Positive or negative decimal numbers
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$", //Positive or negative decimal numbers
     },
     {
       id: "7",
@@ -86,7 +86,7 @@ export function DogForm() {
       type: "string",
       error: errors.latitude,
       isRequired: false,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
   ];
 
@@ -124,7 +124,6 @@ export function DogForm() {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
     }
   };
 
@@ -140,11 +139,8 @@ export function DogForm() {
         await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(storageRef);
         setUrl(downloadURL);
-        console.log("Archivo disponible en", downloadURL);
-        console.log({ ...data, dogPhotoURL: downloadURL });
-        mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+        mutate({ ...data, dogPhotoURL: downloadURL });
       } else {
-        console.log(data);
         mutate(data);
       }
     } catch (error) {

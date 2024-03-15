@@ -43,14 +43,6 @@ export function DogCardDetailed() {
     queryFn: () => getDogById(id),
   });
 
-  console.log(dogData);
-
-  // const [expanded, setExpanded] = React.useState(false);
-
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
-
   if (isLoading) {
     return <CircularIndeterminate />;
   }

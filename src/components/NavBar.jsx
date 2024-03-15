@@ -11,7 +11,6 @@ export const NavBar = () => {
     mutationFn: clearCookie,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      // console.log("Cookie has been cleared");
       navigate("/login");
     },
     onError: (error) => {

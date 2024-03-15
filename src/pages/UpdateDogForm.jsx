@@ -24,8 +24,6 @@ export function UpdateDogForm() {
     queryFn: () => getDogById(id),
   });
 
-  console.log(dogData);
-
   const {
     control,
     handleSubmit,
@@ -152,7 +150,6 @@ export function UpdateDogForm() {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
-      console.log(e.target.files[0]);
     }
   };
 
@@ -172,11 +169,8 @@ export function UpdateDogForm() {
         await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(storageRef);
         setUrl(downloadURL);
-        console.log("Archivo disponible en", downloadURL);
-        console.log({ ...data, dogPhotoURL: downloadURL });
         mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
       } else {
-        console.log(data);
         mutate(data);
       }
     } catch (error) {

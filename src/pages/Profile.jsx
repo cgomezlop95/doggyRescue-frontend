@@ -9,7 +9,6 @@ import { CircularIndeterminate } from "../components/CircularIndeterminate";
 export const Profile = () => {
   let auth = useAuth();
   const userId = auth.currentUser.id;
-  console.log("userId", userId);
   const { data: myRequestData, isLoading } = useQuery({
     queryKey: ["myRequests", userId],
     queryFn: () => getMyRequests(userId),
@@ -18,9 +17,6 @@ export const Profile = () => {
   if (isLoading) {
     return <CircularIndeterminate />;
   }
-
-  // console.log("myRequestData", myRequestData);
-  // console.log(auth.currentUser);
 
   return (
     <>
