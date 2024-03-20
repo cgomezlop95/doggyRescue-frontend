@@ -66,6 +66,7 @@ export function DogList() {
           label="Select the dog gender"
           className="max-w-xs"
           onChange={handleSexChange}
+          color="primary"
         >
           <SelectItem key="all" value="all">
             All
@@ -82,6 +83,7 @@ export function DogList() {
           label="Select the dog breed"
           className="max-w-xs"
           onChange={handleBreedChange}
+          color="primary"
         >
           <SelectItem key="all" value="all">
             All
