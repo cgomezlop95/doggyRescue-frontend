@@ -7,6 +7,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
 import { Card, CardHeader, CardBody, Divider, Image } from "@nextui-org/react";
 import { useState } from "react";
+import { Select, SelectItem } from "@nextui-org/react";
 
 export function DogList() {
   const { data: dogData, isLoading } = useQuery({
@@ -60,41 +61,37 @@ export function DogList() {
         <Divider />
       </Card>
 
-      <div className="flex flex-row my-8 mx-auto max-w-lg p-4 bg-white shadow-md rounded-lg">
-        <label
-          htmlFor="dogSex"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Filter by Dog Sex
-        </label>
-        <select
-          id="dogSex"
-          name="dogSex"
+      <div className="flex justify-center mx-auto gap-4 flex-wrap mt-8">
+        <Select
+          label="Select the dog gender"
+          className="max-w-xs"
           onChange={handleSexChange}
-          className="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
-          <option value="all">All</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+          <SelectItem key="all" value="all">
+            All
+          </SelectItem>
+          <SelectItem key="male" value="male">
+            Male
+          </SelectItem>
+          <SelectItem key="female" value="female">
+            Female
+          </SelectItem>
+        </Select>
 
-        <label
-          htmlFor="dogBreed"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Filter by Dog Breed
-        </label>
-        <select
-          id="dogBreed"
-          name="dogBreed"
+        <Select
+          label="Select the dog breed"
+          className="max-w-xs"
           onChange={handleBreedChange}
-          className="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
-          <option value="all">All</option>
+          <SelectItem key="all" value="all">
+            All
+          </SelectItem>
           {dogBreedData?.dogBreeds.map((el) => (
-            <option value={el.dogBreed}>{el.dogBreed}</option>
+            <SelectItem value={el.dogBreed} key={el.dogBreed}>
+              {el.dogBreed}
+            </SelectItem>
           ))}
-        </select>
+        </Select>
       </div>
 
       <ImageList

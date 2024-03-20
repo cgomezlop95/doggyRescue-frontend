@@ -91,7 +91,7 @@ export function UpdateUserForm() {
     mutationKey: ["updateUser", userId],
     mutationFn: (data) => updateUser(userId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
       navigate("/profile");
     },
   });

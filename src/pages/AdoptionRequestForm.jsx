@@ -182,20 +182,25 @@ export function AdoptionRequestForm() {
         </div>
       </div>
 
-      {/* Submit Button - Positioned below the columns */}
-      <div className="text-center mt-6">
-        <Button color="primary" type="submit" onClick={handleSubmit(onSubmit)}>
-          Submit
-        </Button>
-      </div>
+      <div className="flex flex-col items-center">
+        <div className="mt-6">
+          <Button
+            color="primary"
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+          >
+            Submit
+          </Button>
+        </div>
 
-      {isSuccess && (
-        <Box className="mt-6 text-center">
-          <Alert severity="success">
-            Your adoption request was successfully created.
-          </Alert>
-        </Box>
-      )}
+        {isSuccess && (
+          <div className="mt-6 max-w-md text-center">
+            <Alert severity="success">
+              Your adoption request was successfully created.
+            </Alert>
+          </div>
+        )}
+      </div>
     </>
   );
 }
