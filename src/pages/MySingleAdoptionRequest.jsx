@@ -76,6 +76,14 @@ export const MySingleAdoptionRequest = () => {
                 </div>
               );
             })}
+
+          <Textarea
+            label="Adopter Description"
+            value={requestData.adoptionRequest.adopterDescription}
+            readOnly
+            bordered
+            className="mt-3"
+          />
         </div>
 
         <div>
@@ -97,6 +105,14 @@ export const MySingleAdoptionRequest = () => {
                 </div>
               );
             })}
+
+          <Textarea
+            label="Dog Description"
+            value={requestData.adoptionRequest.dog.dogDescription}
+            readOnly
+            bordered
+            className="mt-3"
+          />
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {
 } from "../service/adoptionRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
-import { Button, Input, User } from "@nextui-org/react";
+import { Button, Input, User, Textarea } from "@nextui-org/react";
 
 export const RequestDetailed = () => {
   const { id } = useParams();
@@ -77,7 +77,14 @@ export const RequestDetailed = () => {
           {Object.entries(requestData.adoptionRequest)
             .filter(
               ([key]) =>
-                !["userId", "dogId", "updatedAt", "user", "dog"].includes(key)
+                ![
+                  "userId",
+                  "dogId",
+                  "updatedAt",
+                  "user",
+                  "dog",
+                  "adopterDescription",
+                ].includes(key)
             )
             .map(([key, value]) => {
               let label =
@@ -97,26 +104,46 @@ export const RequestDetailed = () => {
                 </div>
               );
             })}
+
+          <Textarea
+            label="Adopter Description"
+            value={requestData.adoptionRequest.adopterDescription}
+            readOnly
+            bordered
+            className="mt-3"
+          />
         </div>
+
         <div>
           <h3 className="mb-4 font-bold text-lg">Dog Details</h3>
           {Object.entries(requestData.adoptionRequest.dog)
-            .filter(([key]) => !["dogPhotoURL"].includes(key))
+            .filter(([key]) => !["dogPhotoURL", "dogDescription"].includes(key))
             .map(([key, value]) => {
               let label =
                 key.charAt(0).toUpperCase() +
                 key.slice(1).replace(/([A-Z])/g, " $1");
               label = label.charAt(0).toUpperCase() + label.slice(1).trim();
 
+              const displayValue =
+                typeof value === "boolean" ? (value ? "Yes" : "No") : value;
+
               return (
                 <div key={key} className="mb-3">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     {label}
                   </label>
-                  <Input readOnly value={value} className="w-full" />
+                  <Input readOnly value={displayValue} className="w-full" />
                 </div>
               );
             })}
+
+          <Textarea
+            label="Dog Description"
+            value={requestData.adoptionRequest.dog.dogDescription}
+            readOnly
+            bordered
+            className="mt-3"
+          />
         </div>
       </div>
 

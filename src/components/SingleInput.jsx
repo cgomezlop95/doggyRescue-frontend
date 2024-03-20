@@ -24,7 +24,6 @@ export function SingleInput({
       name={name}
       control={control}
       defaultValue={defaultValue ? defaultValue : ""} //This solved my warning "A component changed from uncontrolled to controlled"
-  
       rules={{
         required: {
           value: isRequired,

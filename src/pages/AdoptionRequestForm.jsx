@@ -9,6 +9,7 @@ import { Button } from "@nextui-org/react";
 import { Alert, Box } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
+import { DescriptionInput } from "../components/DescriptionInput";
 
 export function AdoptionRequestForm() {
   const { id } = useParams();
@@ -76,15 +77,15 @@ export function AdoptionRequestForm() {
       isRequired: true,
       patternValue: ".*",
     },
-    {
-      id: "7",
-      name: "adopterDescription",
-      label: "Please tell us a bit more about yourself",
-      type: "string",
-      error: errors.adopterDescription,
-      isRequired: true,
-      patternValue: ".*",
-    },
+    // {
+    //   id: "7",
+    //   name: "adopterDescription",
+    //   label: "Please tell us a bit more about yourself",
+    //   type: "string",
+    //   error: errors.adopterDescription,
+    //   isRequired: true,
+    //   patternValue: ".*",
+    // },
   ];
 
   const booleanInputArray = [
@@ -165,6 +166,12 @@ export function AdoptionRequestForm() {
             ))}
           </form>
         </div>
+
+        <DescriptionInput
+          name="adopterDescription"
+          control={control}
+          error={errors.adopterDescription}
+        />
 
         {/* Right Column: Boolean Group */}
         <div className="flex-1">

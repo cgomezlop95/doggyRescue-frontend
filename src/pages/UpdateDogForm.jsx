@@ -14,6 +14,7 @@ import { CameraIcon } from "../components/CameraIcon";
 import { useNavigate, useParams } from "react-router-dom";
 import { queryClient } from "../main";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
+import { DescriptionInput } from "../components/DescriptionInput";
 
 export function UpdateDogForm() {
   const { id } = useParams();
@@ -51,7 +52,7 @@ export function UpdateDogForm() {
       error: errors.dogAge,
       isRequired: true,
       defaultValue: dogData?.dog.dogAge,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "3",
@@ -61,7 +62,7 @@ export function UpdateDogForm() {
       error: errors.dogWeight,
       isRequired: true,
       defaultValue: dogData?.dog.dogWeight,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "4",
@@ -73,16 +74,16 @@ export function UpdateDogForm() {
       defaultValue: dogData?.dog.dogBreed,
       patternValue: ".*",
     },
-    {
-      id: "5",
-      name: "dogDescription",
-      label: "Description",
-      type: "string",
-      error: errors.dogDescription,
-      isRequired: false,
-      defaultValue: dogData?.dog.dogDescription,
-      patternValue: ".*",
-    },
+    // {
+    //   id: "5",
+    //   name: "dogDescription",
+    //   label: "Description",
+    //   type: "string",
+    //   error: errors.dogDescription,
+    //   isRequired: false,
+    //   defaultValue: dogData?.dog.dogDescription,
+    //   patternValue: ".*",
+    // },
     {
       id: "6",
       name: "longitude",
@@ -91,7 +92,7 @@ export function UpdateDogForm() {
       error: errors.longitude,
       isRequired: false,
       defaultValue: dogData?.dog.longitude,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "7",
@@ -101,7 +102,7 @@ export function UpdateDogForm() {
       error: errors.latitude,
       isRequired: false,
       defaultValue: dogData?.dog.latitude,
-      patternValue: "^-?(0|[1-9][0-9]*)\.[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
   ];
 
@@ -212,6 +213,13 @@ export function UpdateDogForm() {
             />
           );
         })}
+
+        <DescriptionInput
+          name="dogDescription"
+          control={control}
+          error={errors.dogDescription}
+          defaultValue={dogData?.dog.dogDescription}
+        />
 
         <div className="flex flex-wrap gap-4 max-w-sm">
           {booleanInputArray.map((el) => {

@@ -3,7 +3,7 @@ import { InputFileUpload } from "../components/InputFileUpload";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postDog } from "../service/dog";
-import { Button } from "@nextui-org/react";
+import { Button, Textarea } from "@nextui-org/react";
 import { SelectInput } from "../components/SelectInput";
 import { Alert, Box } from "@mui/material";
 import React, { useState } from "react";
@@ -12,6 +12,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
 import { CameraIcon } from "../components/CameraIcon";
 import { Link, useNavigate } from "react-router-dom";
+import { DescriptionInput } from "../components/DescriptionInput";
 
 export function DogForm() {
   const navigate = useNavigate(); //For redirecting upon success
@@ -59,15 +60,6 @@ export function DogForm() {
       type: "string",
       error: errors.dogBreed,
       isRequired: true,
-      patternValue: ".*",
-    },
-    {
-      id: "5",
-      name: "dogDescription",
-      label: "Description",
-      type: "string",
-      error: errors.dogDescription,
-      isRequired: false,
       patternValue: ".*",
     },
     {
@@ -179,6 +171,12 @@ export function DogForm() {
             />
           );
         })}
+
+        <DescriptionInput
+          name="dogDescription"
+          control={control}
+          error={errors.dogDescription}
+        />
 
         <div className="flex flex-wrap gap-4 max-w-sm">
           {booleanInputArray.map((el) => {
