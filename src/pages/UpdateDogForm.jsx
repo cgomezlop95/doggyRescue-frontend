@@ -74,16 +74,6 @@ export function UpdateDogForm() {
       defaultValue: dogData?.dog.dogBreed,
       patternValue: ".*",
     },
-    // {
-    //   id: "5",
-    //   name: "dogDescription",
-    //   label: "Description",
-    //   type: "string",
-    //   error: errors.dogDescription,
-    //   isRequired: false,
-    //   defaultValue: dogData?.dog.dogDescription,
-    //   patternValue: ".*",
-    // },
     {
       id: "6",
       name: "longitude",
@@ -170,7 +160,7 @@ export function UpdateDogForm() {
         await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(storageRef);
         setUrl(downloadURL);
-        mutate({ ...data, dogPhotoURL: downloadURL }); //await here ?
+        mutate({ ...data, dogPhotoURL: downloadURL }); 
       } else {
         mutate(data);
       }
@@ -234,8 +224,6 @@ export function UpdateDogForm() {
             );
           })}
         </div>
-        {/* 
-        <InputFileUpload onChange={handleChange} /> */}
 
         <input type="file" onChange={handleChange} />
 

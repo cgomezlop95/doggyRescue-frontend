@@ -20,8 +20,7 @@ export function AdoptedDogList() {
     <ImageList
       sx={{ width: 1300, margin: 5 }}
       cols={4}
-      rowHeight={300} //or "auto"
-      // variant="woven"
+      rowHeight={300}
       gap={20}
     >
       {dogData?.dogs.map((item) => (
@@ -31,23 +30,12 @@ export function AdoptedDogList() {
               style={{
                 backgroundImage: `url(${item.dogPhotoURL}`,
                 backgroundSize: "cover",
-                backgroundPosition: "center", //or center
-                height: "300px" /* Adjust height as needed */,
+                backgroundPosition: "center",
+                height: "300px",
               }}
             ></div>
 
-            <ImageListItemBar
-              title={item.dogName}
-              subtitle={item.dogBreed}
-              // actionIcon={
-              //   <IconButton
-              //     sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-              //     aria-label={`info about ${item.dogName}`}
-              //   >
-              //     <InfoIcon />
-              //   </IconButton>
-              // }
-            />
+            <ImageListItemBar title={item.dogName} subtitle={item.dogBreed} />
           </ImageListItem>
         </Link>
       ))}

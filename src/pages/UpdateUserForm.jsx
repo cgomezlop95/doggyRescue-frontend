@@ -1,16 +1,12 @@
 import { SingleInput } from "../components/SingleInput";
-import { InputFileUpload } from "../components/InputFileUpload";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@nextui-org/react";
-import { SelectInput } from "../components/SelectInput";
 import { Alert, Box } from "@mui/material";
 import React, { useState } from "react";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { BooleanGroup } from "../components/BooleanGroup";
-import { CameraIcon } from "../components/CameraIcon";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUserById, updateUser } from "../service/user";
 import { useAuth } from "../hooks/useAuth";
 import { queryClient } from "../main";
@@ -91,7 +87,7 @@ export function UpdateUserForm() {
     mutationKey: ["updateUser", userId],
     mutationFn: (data) => updateUser(userId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", userId] });
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       navigate("/profile");
     },
   });
@@ -118,11 +114,9 @@ export function UpdateUserForm() {
 
   return (
     <>
-      <h1>Update Profile Form</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center items-center mt-20 gap-3"
-        // className="max-w-xs"
       >
         {userInputArray.map((el) => {
           return (
@@ -140,9 +134,6 @@ export function UpdateUserForm() {
             />
           );
         })}
-
-        {/* 
-        <InputFileUpload onChange={handleChange} /> */}
 
         <input type="file" onChange={handleChange} />
 

@@ -12,9 +12,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export function SignUp() {
   const navigate = useNavigate();
-  const [isSelected, setIsSelected] = useState(false); //For privacy policy
+  const [isSelected, setIsSelected] = useState(false);
   const [privacyPolicyError, setPrivacyPolicyError] = useState("");
-  //The last sentence is for the error message if the user did not sign the privacy policy
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
 
@@ -91,21 +90,19 @@ export function SignUp() {
   const onSubmit = async (data) => {
     if (!isSelected) {
       setPrivacyPolicyError("You must agree to the privacy policy to sign up.");
-      return; // Prevent the form submission
+      return;
     } else if (image) {
       const storageRef = ref(storage, `images/${image.name}`);
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
       setUrl(downloadURL);
-      ("Archivo disponible en", downloadURL);
-      setPrivacyPolicyError(""); // Clear any previous error message
-      signupMutation({ ...data, userPhotoURL: downloadURL }); //await here ?
+      "Archivo disponible en", downloadURL;
+      setPrivacyPolicyError("");
+      signupMutation({ ...data, userPhotoURL: downloadURL });
     } else {
-      setPrivacyPolicyError(""); // Clear any previous error message
+      setPrivacyPolicyError("");
       signupMutation(data);
     }
-    // setPrivacyPolicyError(""); // Clear any previous error message
-    // signupMutation(data); // Proceed with the signup mutation
   };
 
   return (

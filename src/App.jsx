@@ -43,13 +43,13 @@ export function App() {
             path="/my-adoption-request/:id"
             element={<MySingleAdoptionRequest />}
           ></Route>
-          <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         </Route>
 
         <Route element={<RequireAdmin />}>
           <Route path="/new-dog" element={<DogForm />} />
           <Route path="/adoption-requests" element={<RequestAdminTable />} />
           <Route path="/adoption-request/:id" element={<RequestDetailed />} />
+          <Route path="/update-dog/:id" element={<UpdateDogForm />} />
         </Route>
       </Route>
     </Routes>

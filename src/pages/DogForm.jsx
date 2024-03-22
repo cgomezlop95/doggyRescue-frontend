@@ -1,5 +1,4 @@
 import { SingleInput } from "../components/SingleInput";
-import { InputFileUpload } from "../components/InputFileUpload";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postDog } from "../service/dog";
@@ -10,18 +9,16 @@ import React, { useState } from "react";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { BooleanGroup } from "../components/BooleanGroup";
-import { CameraIcon } from "../components/CameraIcon";
 import { Link, useNavigate } from "react-router-dom";
 import { DescriptionInput } from "../components/DescriptionInput";
 
 export function DogForm() {
-  const navigate = useNavigate(); //For redirecting upon success
+  const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     resetField,
-    register,
     formState: { errors },
   } = useForm();
 
@@ -69,7 +66,7 @@ export function DogForm() {
       type: "string",
       error: errors.longitude,
       isRequired: false,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$", //Positive or negative decimal numbers
+      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
     },
     {
       id: "7",
@@ -142,12 +139,11 @@ export function DogForm() {
 
   return (
     <>
-      <h1>Dog Form</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center items-center mt-20 gap-3"
-        // className="max-w-xs"
       >
+        <h3 className="text-2xl font-bold text-blue-600 mb-6">Add New Dog</h3>
         <SelectInput
           control={control}
           name="dogSex"
@@ -191,12 +187,14 @@ export function DogForm() {
             );
           })}
         </div>
-        {/* 
-        <InputFileUpload onChange={handleChange} /> */}
 
         <input type="file" onChange={handleChange} />
 
-        <Button color="primary" type="submit">
+        <Button
+          color="primary"
+          type="submit"
+          className="py-2 px-4 mb-8"
+        >
           Submit
         </Button>
 
@@ -216,5 +214,3 @@ export function DogForm() {
     </>
   );
 }
-
-//I cannot enter negative numbers?

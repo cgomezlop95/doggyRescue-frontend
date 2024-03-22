@@ -9,15 +9,10 @@ import {
   User,
   Chip,
   Tooltip,
-  getKeyValue,
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllRequests } from "../service/adoptionRequest";
 import { Link } from "react-router-dom";
-// import { DogIcon } from "../components/DogIcon";
-import PetsIcon from "@mui/icons-material/Pets";
-import { Button } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import { EyeIcon } from "../components/EyeIcon";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
@@ -84,17 +79,6 @@ export function RequestAdminTable() {
           </Chip>
         );
       case "details":
-        // return (
-        //   <Link
-        //     key={requestId}
-        //     to={`/adoption-request/${requestId.toString()}`}
-        //   >
-        //     <Button variant="contained" endIcon={<SendIcon />}>
-        //       Go to Request
-        //     </Button>
-        //     {/* <DogIcon /> */}
-        //   </Link>
-        // );
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details">

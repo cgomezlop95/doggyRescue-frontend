@@ -31,9 +31,6 @@ export const Profile = () => {
         <span className="font-bold text-lg ml-4">
           {auth.currentUser.firstName} {auth.currentUser.lastName}
         </span>
-        {/* <Chip size="lg">
-          {auth.currentUser.firstName} {auth.currentUser.lastName}
-        </Chip> */}
       </div>
 
       <div className="grid grid-cols-2 gap-4 max-w-md mx-auto pb-8">

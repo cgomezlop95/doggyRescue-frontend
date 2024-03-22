@@ -9,7 +9,7 @@ export function BooleanGroup({ control, name, label, defaultValue }) {
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue} //Should be False
+      defaultValue={defaultValue} 
       render={({ field: { onChange, value } }) => (
         <Switch
           color="primary"

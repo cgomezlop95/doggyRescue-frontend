@@ -77,15 +77,6 @@ export function AdoptionRequestForm() {
       isRequired: true,
       patternValue: ".*",
     },
-    // {
-    //   id: "7",
-    //   name: "adopterDescription",
-    //   label: "Please tell us a bit more about yourself",
-    //   type: "string",
-    //   error: errors.adopterDescription,
-    //   isRequired: true,
-    //   patternValue: ".*",
-    // },
   ];
 
   const booleanInputArray = [
@@ -136,7 +127,6 @@ export function AdoptionRequestForm() {
       </h1>
 
       <div className="flex justify-center items-center gap-8 m-8">
-        {/* Left Column: Image */}
         <div className="overflow-hidden rounded-full w-48 h-48 border border-gray-200 shadow-lg">
           <img
             src={dogData.dog.dogPhotoURL}
@@ -145,7 +135,6 @@ export function AdoptionRequestForm() {
           />
         </div>
 
-        {/* Middle Column: Input Fields */}
         <div className="flex-1">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -173,7 +162,6 @@ export function AdoptionRequestForm() {
           error={errors.adopterDescription}
         />
 
-        {/* Right Column: Boolean Group */}
         <div className="flex-1">
           <div className="flex flex-col gap-2">
             {booleanInputArray.map((el) => (

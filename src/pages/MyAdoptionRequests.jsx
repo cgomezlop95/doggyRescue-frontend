@@ -15,10 +15,6 @@ import {
   getKeyValue,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
-// import { DogIcon } from "../components/DogIcon";
-import PetsIcon from "@mui/icons-material/Pets";
-import { Button } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import { EyeIcon } from "../components/EyeIcon";
 import { CircularIndeterminate } from "../components/CircularIndeterminate";
 
@@ -30,7 +26,6 @@ const statusColorMap = {
 
 const columns = [
   { name: "DOG", uid: "name" },
-  // { name: "REQUESTER", uid: "requester" },
   { name: "STATUS", uid: "status" },
   { name: "DETAILS", uid: "details" },
 ];
@@ -57,20 +52,6 @@ export const MyAdoptionRequests = () => {
             {request.user.email}
           </User>
         );
-      // case "requester":
-      //   return (
-      //     <div className="flex flex-col">
-      //       <p className="text-bold text-sm capitalize">{cellValue}</p>
-      //       <p className="text-bold text-sm capitalize text-default-400">
-      //         {request.user.firstName +
-      //           " " +
-      //           request.user.lastName +
-      //           " - " +
-      //           request.user.email}
-      //       </p>
-      //       <p>{request.adopterAge} years</p>
-      //     </div>
-      //   );
       case "status":
         return (
           <Chip
@@ -87,17 +68,6 @@ export const MyAdoptionRequests = () => {
           </Chip>
         );
       case "details":
-        // return (
-        //   <Link
-        //     key={requestId}
-        //     to={`/adoption-request/${requestId.toString()}`}
-        //   >
-        //     <Button variant="contained" endIcon={<SendIcon />}>
-        //       Go to Request
-        //     </Button>
-        //     {/* <DogIcon /> */}
-        //   </Link>
-        // );
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details">

@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useQuery } from "@tanstack/react-query";
 import { getPendingDogs } from "../service/dog";
-import { Chip, Textarea } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
 
 mapboxgl.accessToken =
@@ -21,7 +21,7 @@ export function Mapbox() {
     {
       id: "1",
       label: "Characteristics",
-      content: [`${selectedDog?.dogAge} years`, selectedDog?.dogSex],
+      content: [selectedDog?.dogBreed, `${selectedDog?.dogAge} years`, selectedDog?.dogSex],
     },
     {
       id: "2",
@@ -44,7 +44,6 @@ export function Mapbox() {
 
     dogsWithCoordinates?.forEach((dog) => {
       const dogCoordinates = [dog.longitude, dog.latitude];
-      //Custom marker with dog icon//
       const el = document.createElement("div");
       el.className = "marker";
       el.style.backgroundImage = `url(${dog.dogPhotoURL})`;
@@ -72,9 +71,7 @@ export function Mapbox() {
     });
 
     return () => map.remove();
-  }, [dogData]); //Add selectedDog into the array?
-
-  // return <div id="map" style={{ width: "100%", height: "800px" }} />;
+  }, [dogData]); 
 
   return (
     <div style={{ display: "flex", height: "800px" }}>
@@ -82,7 +79,6 @@ export function Mapbox() {
         className="flex flex-col items-center p-5 bg-gray-100 overflow-y-auto"
         style={{ width: "300px" }}
       >
-        {/* <h2 className="text-xl font-semibold mb-4">Sidebar Title</h2> */}
         {selectedDog ? (
           <>
             <Chip color="primary" size="lg" className="mb-4">
@@ -108,7 +104,6 @@ export function Mapbox() {
                 )}
               </Tabs>
             </div>
-            {/* Additional dog details */}
           </>
         ) : (
           <p>Select a dog to see details</p>
@@ -119,5 +114,3 @@ export function Mapbox() {
     </div>
   );
 }
-
-//Resize markers depending on the zoom?
