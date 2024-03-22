@@ -52,7 +52,7 @@ export function UpdateDogForm() {
       error: errors.dogAge,
       isRequired: true,
       defaultValue: dogData?.dog.dogAge,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "3",
@@ -62,7 +62,7 @@ export function UpdateDogForm() {
       error: errors.dogWeight,
       isRequired: true,
       defaultValue: dogData?.dog.dogWeight,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "4",
@@ -82,7 +82,7 @@ export function UpdateDogForm() {
       error: errors.longitude,
       isRequired: false,
       defaultValue: dogData?.dog.longitude,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "7",
@@ -92,7 +92,7 @@ export function UpdateDogForm() {
       error: errors.latitude,
       isRequired: false,
       defaultValue: dogData?.dog.latitude,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
   ];
 
@@ -160,7 +160,7 @@ export function UpdateDogForm() {
         await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(storageRef);
         setUrl(downloadURL);
-        mutate({ ...data, dogPhotoURL: downloadURL }); 
+        mutate({ ...data, dogPhotoURL: downloadURL });
       } else {
         mutate(data);
       }

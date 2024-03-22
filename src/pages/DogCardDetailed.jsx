@@ -73,7 +73,7 @@ export function DogCardDetailed() {
             </li>
             <li className="text-gray-800">
               <span className="font-semibold">Weight:</span>{" "}
-              {dogData.dog.dogWeight}
+              {dogData.dog.dogWeight}{" "} kilos
             </li>
             <li className="text-gray-800">
               <span className="font-semibold">Suitable For Kids:</span>{" "}

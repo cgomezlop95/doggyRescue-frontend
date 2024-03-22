@@ -39,7 +39,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogAge,
       isRequired: true,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "3",
@@ -48,7 +48,7 @@ export function DogForm() {
       type: "string",
       error: errors.dogWeight,
       isRequired: true,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "4",
@@ -66,7 +66,7 @@ export function DogForm() {
       type: "string",
       error: errors.longitude,
       isRequired: false,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
     {
       id: "7",
@@ -75,7 +75,7 @@ export function DogForm() {
       type: "string",
       error: errors.latitude,
       isRequired: false,
-      patternValue: "^-?(0|[1-9][0-9]*).[0-9]+$",
+      patternValue: "^-?(0|[1-9][0-9]*)(.[0-9]+)?$",
     },
   ];
 
@@ -190,11 +190,7 @@ export function DogForm() {
 
         <input type="file" onChange={handleChange} />
 
-        <Button
-          color="primary"
-          type="submit"
-          className="py-2 px-4 mb-8"
-        >
+        <Button color="primary" type="submit" className="py-2 px-4 mb-8">
           Submit
         </Button>
 
